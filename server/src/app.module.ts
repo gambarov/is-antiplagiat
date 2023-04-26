@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { UserEntity } from './user/user.entity';
 import { StudentEntity } from './user/student.entity';
 import { SupervisorEntity } from './user/supervisor.entity';
+import { CourseModule } from './course/course.module';
 
 @Module({
     imports: [
@@ -41,6 +42,7 @@ import { SupervisorEntity } from './user/supervisor.entity';
         WorkModule,
         FileModule,
         UserModule,
+        CourseModule,
     ],
 })
 export class AppModule {}
