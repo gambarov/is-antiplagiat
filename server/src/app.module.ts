@@ -13,6 +13,7 @@ import { UserEntity } from './user/user.entity';
 import { StudentEntity } from './user/student.entity';
 import { SupervisorEntity } from './user/supervisor.entity';
 import { CourseModule } from './course/course.module';
+import { CourseEntity } from './course/course.entity';
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { CourseModule } from './course/course.module';
                 UserEntity,
                 StudentEntity,
                 SupervisorEntity,
+                CourseEntity,
             ],
             synchronize: true,
         }),
