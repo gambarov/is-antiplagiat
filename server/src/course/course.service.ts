@@ -4,6 +4,9 @@ import { CourseEntity } from './course.entity';
 import { Repository } from 'typeorm';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
+import { PaginatedOptionsDTO } from 'src/utils/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/utils/dto/paginated.dto';
+import { PaginatedMetaDTO } from 'src/utils/dto/paginated-meta.dto';
 
 @Injectable()
 export class CourseService {
@@ -16,8 +19,24 @@ export class CourseService {
         return await this.courseRepo.findOneByOrFail({ id });
     }
 
-    async findAll(): Promise<CourseEntity[]> {
-        return await this.courseRepo.find();
+    async findAll(
+        optionsDTO: PaginatedOptionsDTO,
+    ): Promise<PaginatedDTO<CourseEntity>> {
+        const [entities, itemCount] = await this.courseRepo.findAndCount({
+            take: optionsDTO.take,
+            skip: optionsDTO.skip,
+            order: { name: optionsDTO.order },
+        });
+
+        const meta = new PaginatedMetaDTO({
+            itemCount,
+            paginatedOptionsDTO: optionsDTO,
+        });
+
+        return {
+            data: entities,
+            meta,
+        };
     }
 
     async createCourse(dto: CreateCourseDTO): Promise<CourseEntity> {

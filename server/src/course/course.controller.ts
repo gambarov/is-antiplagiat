@@ -1,18 +1,36 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Query,
+} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
+import { PaginatedOptionsDTO } from 'src/utils/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/utils/dto/paginated.dto';
+import { CourseEntity } from './course.entity';
 
 @Controller('courses')
 export class CourseController {
     constructor(private courseService: CourseService) {}
+
+    @Get()
+    async findAll(
+        @Query() optionsDTO: PaginatedOptionsDTO,
+    ): Promise<PaginatedDTO<CourseEntity>> {
+        return await this.courseService.findAll(optionsDTO);
+    }
 
     @Get(':id')
     async findOneById(@Param('id') id: number) {
         return await this.courseService.findOneById(id);
     }
 
-    @Post('create')
+    @Post()
     async create(@Body() dto: CreateCourseDTO) {
         return await this.courseService.createCourse(dto);
     }

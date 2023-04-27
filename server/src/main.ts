@@ -9,7 +9,7 @@ import { SwaggerModule } from '@nestjs/swagger/dist';
 async function bootstrap() {
     const PORT = process.env.PORT || 3000;
     const app = await NestFactory.create(AppModule, { cors: true });
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.useGlobalFilters(new EntityNotFoundExceptionFilter());
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
