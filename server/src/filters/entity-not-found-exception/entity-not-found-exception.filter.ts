@@ -10,7 +10,7 @@ export class EntityNotFoundExceptionFilter<T> implements ExceptionFilter {
         return response.status(404).json({
             message: {
                 statusCode: 404,
-                error: 'Не найден',
+                error: 'Not Found',
                 message: exception.message,
             },
         });
