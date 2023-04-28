@@ -14,6 +14,10 @@ import { StudentEntity } from './user/student.entity';
 import { SupervisorEntity } from './user/supervisor.entity';
 import { CourseModule } from './course/course.module';
 import { CourseEntity } from './course/course.entity';
+import { AssignmentController } from './assignment/assignment.controller';
+import { AssignmentService } from './assignment/assignment.service';
+import { AssignmentModule } from './assignment/assignment.module';
+import { AssignmentEntity } from './assignment/assignment.entity';
 
 @Module({
     imports: [
@@ -37,6 +41,7 @@ import { CourseEntity } from './course/course.entity';
                 StudentEntity,
                 SupervisorEntity,
                 CourseEntity,
+                AssignmentEntity,
             ],
             synchronize: true,
         }),
@@ -45,6 +50,9 @@ import { CourseEntity } from './course/course.entity';
         FileModule,
         UserModule,
         CourseModule,
+        AssignmentModule,
     ],
+    controllers: [AssignmentController],
+    providers: [AssignmentService],
 })
 export class AppModule {}
