@@ -3,6 +3,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -22,6 +23,7 @@ export class AssignmentEntity {
     @ManyToOne(() => CourseEntity, (course) => course.assignments, {
         cascade: true,
     })
+    @JoinColumn({ name: 'course_id' })
     course: CourseEntity;
 
     @CreateDateColumn()
