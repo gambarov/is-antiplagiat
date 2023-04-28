@@ -13,7 +13,7 @@ export class SupervisorEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(() => UserEntity)
+    @OneToOne(() => UserEntity, { cascade: true })
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
 

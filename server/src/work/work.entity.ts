@@ -23,7 +23,9 @@ export class WorkEntity {
     @Column()
     file_url: string;
 
-    @OneToOne(() => WorkResultEntity, (result) => result.work)
+    @OneToOne(() => WorkResultEntity, (result) => result.work, {
+        cascade: true,
+    })
     result: WorkResultEntity;
 
     @CreateDateColumn()

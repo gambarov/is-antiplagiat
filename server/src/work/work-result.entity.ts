@@ -15,7 +15,7 @@ export class WorkResultEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(() => WorkEntity, (work) => work.result)
+    @OneToOne(() => WorkEntity, (work) => work.result, { cascade: true })
     @JoinColumn({ name: 'work_id' })
     work: WorkEntity;
 

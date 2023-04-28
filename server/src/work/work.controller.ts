@@ -13,7 +13,7 @@ import { UploadWorkDTO } from './dto/upload-work.dto';
 import { WorkService } from './work.service';
 import { CheckWorkDTO } from './dto/check-work.dto';
 
-@Controller('works')
+@Controller('assignments/:assId/works')
 export class WorkController {
     constructor(private workService: WorkService) {}
 
