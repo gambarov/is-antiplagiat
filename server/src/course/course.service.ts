@@ -15,11 +15,14 @@ export class CourseService {
         private courseRepo: Repository<CourseEntity>,
     ) {}
 
-    async findOneById(id: number): Promise<CourseEntity> {
-        return await this.courseRepo.findOneByOrFail({ id });
+    async findOneCourseById(id: number): Promise<CourseEntity> {
+        return await this.courseRepo.findOneOrFail({
+            where: { id },
+            relations: ['assignments'],
+        });
     }
 
-    async findAll(
+    async findAllCourses(
         optionsDTO: PaginatedOptionsDTO,
     ): Promise<PaginatedDTO<CourseEntity>> {
         const [entities, itemCount] = await this.courseRepo.findAndCount({
@@ -47,12 +50,12 @@ export class CourseService {
         id: number,
         dto: UpdateCourseDTO,
     ): Promise<CourseEntity> {
-        const course = await this.findOneById(id);
+        const course = await this.findOneCourseById(id);
         return await this.courseRepo.save({ ...course, ...dto });
     }
 
     async deleteCourse(id: number): Promise<number> {
-        await this.findOneById(id);
+        await this.findOneCourseById(id);
         await this.courseRepo.delete({ id });
         return id;
     }
