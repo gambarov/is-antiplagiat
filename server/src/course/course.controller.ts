@@ -22,12 +22,12 @@ export class CourseController {
     async findAll(
         @Query() optionsDTO: PaginatedOptionsDTO,
     ): Promise<PaginatedDTO<CourseEntity>> {
-        return await this.courseService.findAll(optionsDTO);
+        return await this.courseService.findAllCourses(optionsDTO);
     }
 
     @Get(':id')
     async findOneById(@Param('id') id: number) {
-        return await this.courseService.findOneById(id);
+        return await this.courseService.findOneCourseById(id);
     }
 
     @Post()
