@@ -5,9 +5,11 @@ import {
     Entity,
     JoinColumn,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { AssignmentProgressEntity } from './assignment-progress.entity';
 
 @Entity('assignments')
 export class AssignmentEntity {
@@ -25,6 +27,12 @@ export class AssignmentEntity {
     })
     @JoinColumn({ name: 'course_id' })
     course: CourseEntity;
+
+    @OneToMany(
+        () => AssignmentProgressEntity,
+        (progress) => progress.assignment,
+    )
+    progresses: AssignmentProgressEntity[];
 
     @CreateDateColumn()
     created_at: Date;
