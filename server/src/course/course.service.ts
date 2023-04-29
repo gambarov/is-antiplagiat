@@ -4,9 +4,9 @@ import { CourseEntity } from './course.entity';
 import { Repository } from 'typeorm';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
-import { PaginatedOptionsDTO } from 'src/utils/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/utils/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/utils/dto/paginated-meta.dto';
+import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
+import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
 
 @Injectable()
 export class CourseService {

@@ -10,8 +10,8 @@ import {
 import { CourseService } from './course.service';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
-import { PaginatedOptionsDTO } from 'src/utils/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/utils/dto/paginated.dto';
+import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
 import { CourseEntity } from './course.entity';
 
 @Controller('courses')
