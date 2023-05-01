@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { AssignmentProgressEntity } from './assignment-progress.entity';
+import { SubmissionEntity } from 'src/submission/entities/submission.entity';
 
 @Entity('assignments')
 export class AssignmentEntity {
@@ -28,11 +28,8 @@ export class AssignmentEntity {
     @JoinColumn({ name: 'course_id' })
     course: CourseEntity;
 
-    @OneToMany(
-        () => AssignmentProgressEntity,
-        (progress) => progress.assignment,
-    )
-    progresses: AssignmentProgressEntity[];
+    @OneToMany(() => SubmissionEntity, (sub) => sub.assignment)
+    submissions: SubmissionEntity[];
 
     @CreateDateColumn()
     created_at: Date;

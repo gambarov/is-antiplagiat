@@ -9,7 +9,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { AssignmentProgressEntity } from 'src/assignment/assignment-progress.entity';
+import { SubmissionEntity } from 'src/submission/entities/submission.entity';
 
 @Entity('students')
 export class StudentEntity {
@@ -20,8 +20,8 @@ export class StudentEntity {
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
 
-    @OneToMany(() => AssignmentProgressEntity, (progress) => progress.student)
-    progresses: AssignmentProgressEntity[];
+    @OneToMany(() => SubmissionEntity, (sub) => sub.student)
+    submissions: SubmissionEntity[];
 
     @Column()
     ExternalUserID: string;
