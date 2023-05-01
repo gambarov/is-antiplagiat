@@ -24,7 +24,7 @@ export class BaseService<T extends BaseEntity> {
         return await this.repo.findOneOrFail(findOptions);
     }
 
-    async findAllWithPagination(
+    async findAllPaginated(
         optionsDTO: PaginatedOptionsDTO,
         options?: FindManyOptions<T>,
     ): Promise<PaginatedDTO<T>> {
