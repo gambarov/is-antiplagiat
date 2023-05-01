@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AntiplagiatModule } from './antiplagiat/antiplagiat.module';
-import { WorkModule } from './work/work.module';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WorkEntity } from './work/work.entity';
-import { WorkResultEntity } from './work/work-result.entity';
 import { UserModule } from './user/user.module';
 import { UserEntity } from './user/user.entity';
 import { StudentEntity } from './user/student.entity';
@@ -16,6 +13,11 @@ import { CourseModule } from './course/course.module';
 import { CourseEntity } from './course/course.entity';
 import { AssignmentModule } from './assignment/assignment.module';
 import { AssignmentEntity } from './assignment/assignment.entity';
+import { AnswerModule } from './answer/answer.module';
+import { SubmissionModule } from './submission/submission.module';
+import { AnswerEntity } from './answer/entites/answer.entity';
+import { AnswerResultEntity } from './answer/entites/answer-result.entity';
+import { SubmissionEntity } from './submission/entities/submission.entity';
 
 @Module({
     imports: [
@@ -33,22 +35,24 @@ import { AssignmentEntity } from './assignment/assignment.entity';
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
             entities: [
-                WorkEntity,
-                WorkResultEntity,
                 UserEntity,
                 StudentEntity,
                 SupervisorEntity,
                 CourseEntity,
                 AssignmentEntity,
+                AnswerEntity,
+                AnswerResultEntity,
+                SubmissionEntity,
             ],
             synchronize: true,
         }),
         AntiplagiatModule,
-        WorkModule,
         FileModule,
         UserModule,
         CourseModule,
         AssignmentModule,
+        AnswerModule,
+        SubmissionModule,
     ],
 })
 export class AppModule {}
