@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Client } from 'nestjs-soap';
-import { UploadDocOptions } from '../types/upload-doc-options.type';
-import { CheckStatus } from 'src/types/check-status.type';
+import { UploadDocOptions } from './types/upload-doc-options.type';
+import { CheckStatus } from './types/check-status.type';
 
 @Injectable()
 export class AntiplagiatService {

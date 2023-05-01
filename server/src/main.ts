@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
-import { EntityNotFoundExceptionFilter } from './filters/entity-not-found-exception/entity-not-found-exception.filter';
+import { EntityNotFoundExceptionFilter } from './shared/filters/entity-not-found-exception.filter';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 
