@@ -11,7 +11,7 @@ import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
 import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
-import { CourseEntity } from './course.entity';
+import { CourseEntity } from './entities/course.entity';
 import { CourseService } from './course.service';
 
 @Controller('courses')

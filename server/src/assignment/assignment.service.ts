@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AssignmentEntity } from './assignment.entity';
+import { AssignmentEntity } from './entities/assignment.entity';
 import { Repository } from 'typeorm';
 import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';

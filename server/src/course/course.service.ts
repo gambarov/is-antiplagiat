@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CourseEntity } from './course.entity';
+import { CourseEntity } from './entities/course.entity';
 import { Repository } from 'typeorm';
 import { CrudService } from 'src/shared/crud/crud-service.mixin';
 

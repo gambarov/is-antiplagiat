@@ -1,6 +1,6 @@
 import { AnswerEntity } from 'src/answer/entites/answer.entity';
-import { AssignmentEntity } from 'src/assignment/assignment.entity';
-import { StudentEntity } from 'src/user/student.entity';
+import { AssignmentEntity } from 'src/assignment/entities/assignment.entity';
+import { StudentEntity } from 'src/user/entities/student.entity';
 import {
     Column,
     CreateDateColumn,

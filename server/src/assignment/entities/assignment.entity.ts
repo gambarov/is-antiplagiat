@@ -1,4 +1,4 @@
-import { CourseEntity } from 'src/course/course.entity';
+import { CourseEntity } from 'src/course/entities/course.entity';
 import {
     Column,
     CreateDateColumn,

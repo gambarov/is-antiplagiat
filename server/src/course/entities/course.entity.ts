@@ -1,4 +1,4 @@
-import { AssignmentEntity } from 'src/assignment/assignment.entity';
+import { AssignmentEntity } from 'src/assignment/entities/assignment.entity';
 import {
     Column,
     CreateDateColumn,

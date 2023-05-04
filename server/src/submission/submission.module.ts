@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { SubmissionController } from './submission.controller';
 import { SubmissionService } from './submission.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { StudentEntity } from 'src/user/student.entity';
+import { StudentEntity } from 'src/user/entities/student.entity';
 import { SubmissionEntity } from './entities/submission.entity';
-import { AssignmentEntity } from 'src/assignment/assignment.entity';
+import { AssignmentEntity } from 'src/assignment/entities/assignment.entity';
 import { AnswerEntity } from 'src/answer/entites/answer.entity';
 
 @Module({
