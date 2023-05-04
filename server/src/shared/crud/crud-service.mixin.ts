@@ -16,6 +16,9 @@ export interface ICrudService<T> {
         optionsDTO: RequestManyDTO,
         options?: FindManyOptions<T>,
     ): Promise<ResponseManyDTO<T>>;
+    createOne(dto: any): Promise<T>;
+    updateOne(id: number, dto: any): Promise<T>;
+    deleteOne(id: number): Promise<number>;
 }
 
 type Constructor<I> = new (...args: any[]) => I;
@@ -50,6 +53,22 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
             });
 
             return new ResponseManyDTO(entities, meta);
+        }
+
+        async createOne(dto: any): Promise<T> {
+            const entity = this.repo.save(this.repo.create(dto)) as T;
+            return await entity;
+        }
+
+        async updateOne(id: number, dto: any): Promise<T> {
+            const entity = await this.findByIdOrFail(id);
+            return await this.repo.save({ ...entity, ...dto });
+        }
+
+        async deleteOne(id: number): Promise<number> {
+            await this.findByIdOrFail(id);
+            await this.repo.delete({ id } as unknown as FindOptionsWhere<T>);
+            return id;
         }
     }
 
