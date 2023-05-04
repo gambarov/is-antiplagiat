@@ -12,7 +12,7 @@ import { AnswerResultStatus } from './enums/answer-result-status.enum';
 import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
-import { CrudService } from 'src/shared/crud/crud-service.service';
+import { CrudService } from 'src/shared/crud/crud-service.mixin';
 
 @Injectable()
 export class AnswerService extends CrudService(AnswerEntity) {

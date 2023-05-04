@@ -12,7 +12,7 @@ import { UpdateCourseDTO } from './dto/update-course.dto';
 import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { CourseEntity } from './course.entity';
-import { CrudService } from 'src/shared/crud/crud-service.service';
+import { CrudService } from 'src/shared/crud/crud-service.mixin';
 import { CourseService } from './course.service';
 
 @Controller('courses')

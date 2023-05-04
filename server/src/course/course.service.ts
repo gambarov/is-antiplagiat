@@ -6,7 +6,7 @@ import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
 import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
-import { CrudService } from 'src/shared/crud/crud-service.service';
+import { CrudService } from 'src/shared/crud/crud-service.mixin';
 
 @Injectable()
 export class CourseService extends CrudService(CourseEntity) {
