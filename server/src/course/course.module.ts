@@ -8,7 +8,7 @@ import { AssignmentEntity } from 'src/assignment/assignment.entity';
 @Module({
     controllers: [CourseController],
     providers: [CourseService],
-    exports: [CourseService],
+    // exports: [CourseService],
     imports: [TypeOrmModule.forFeature([CourseEntity, AssignmentEntity])],
 })
 export class CourseModule {}

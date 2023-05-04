@@ -12,10 +12,10 @@ import { AnswerResultStatus } from './enums/answer-result-status.enum';
 import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
 import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
 import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
-import { BaseService } from 'src/shared/services/base-service.service';
+import { CrudService } from 'src/shared/services/crud-service.service';
 
 @Injectable()
-export class AnswerService extends BaseService<AnswerEntity> {
+export class AnswerService extends CrudService(AnswerEntity) {
     constructor(
         @InjectRepository(AnswerEntity)
         private answerRepo: Repository<AnswerEntity>,

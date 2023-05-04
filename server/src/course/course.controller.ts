@@ -7,12 +7,13 @@ import {
     Post,
     Query,
 } from '@nestjs/common';
-import { CourseService } from './course.service';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
 import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
 import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
 import { CourseEntity } from './course.entity';
+import { CrudService } from 'src/shared/services/crud-service.service';
+import { CourseService } from './course.service';
 
 @Controller('courses')
 export class CourseController {
@@ -22,26 +23,29 @@ export class CourseController {
     async findAll(
         @Query() optionsDTO: PaginatedOptionsDTO,
     ): Promise<PaginatedDTO<CourseEntity>> {
-        return await this.courseService.findAllCourses(optionsDTO);
+        return await this.courseService.findAllPaginated(optionsDTO);
     }
 
     @Get(':id')
-    async findOneById(@Param('id') id: number) {
-        return await this.courseService.findOneCourseById(id);
+    async findById(@Param('id') id: number) {
+        return await this.courseService.findByIdOrFail(id);
     }
 
     @Post()
     async create(@Body() dto: CreateCourseDTO) {
-        return await this.courseService.createCourse(dto);
+        return await (this.courseService as CourseService).createCourse(dto);
     }
 
     @Post(':id')
     async update(@Param('id') id: number, @Body() dto: UpdateCourseDTO) {
-        return await this.courseService.updateCourse(id, dto);
+        return await (this.courseService as CourseService).updateCourse(
+            id,
+            dto,
+        );
     }
 
     @Delete(':id')
     async delete(@Param('id') id: number) {
-        return await this.courseService.deleteCourse(id);
+        return await (this.courseService as CourseService).deleteCourse(id);
     }
 }

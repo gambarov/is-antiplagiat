@@ -8,7 +8,6 @@ import {
     Post,
     UploadedFile,
     UseInterceptors,
-    UsePipes,
 } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -16,11 +15,10 @@ import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { EntityByIdPipe } from 'src/shared/pipes/entity-by-id.pipe';
 import { AnswerEntity } from './entites/answer.entity';
-import { BaseService } from 'src/shared/services/base-service.service';
 
 @Controller('answers')
 export class AnswerController {
-    constructor(private answerService: BaseService<AnswerEntity>) {}
+    constructor(private answerService: AnswerService) {}
 
     @Get(':id')
     async findById(@Param('id', EntityByIdPipe) answer: AnswerEntity) {

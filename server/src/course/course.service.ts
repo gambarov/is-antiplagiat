@@ -6,40 +6,29 @@ import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
 import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
 import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
+import { CrudService } from 'src/shared/services/crud-service.service';
 
 @Injectable()
-export class CourseService {
+export class CourseService extends CrudService(CourseEntity) {
     constructor(
         @InjectRepository(CourseEntity)
         private courseRepo: Repository<CourseEntity>,
-    ) {}
+    ) {
+        super(courseRepo);
+    }
 
-    async findOneCourseById(id: number): Promise<CourseEntity> {
-        return await this.courseRepo.findOneOrFail({
-            where: { id },
+    async findByIdOrFail(id: number): Promise<CourseEntity> {
+        return await super.findByIdOrFail(id, {
             relations: ['assignments'],
         });
     }
 
-    async findAllCourses(
+    async findAllPaginated(
         optionsDTO: PaginatedOptionsDTO,
     ): Promise<PaginatedDTO<CourseEntity>> {
-        const [entities, itemCount] = await this.courseRepo.findAndCount({
-            take: optionsDTO.take,
-            skip: optionsDTO.skip,
-            order: { name: optionsDTO.order },
+        return await super.findMany(optionsDTO, {
+            order: { id: optionsDTO.order },
         });
-
-        const meta = new PaginatedMetaDTO({
-            itemCount,
-            paginatedOptionsDTO: optionsDTO,
-        });
-
-        return {
-            data: entities,
-            meta,
-        };
     }
 
     async createCourse(dto: CreateCourseDTO): Promise<CourseEntity> {
@@ -50,12 +39,12 @@ export class CourseService {
         id: number,
         dto: UpdateCourseDTO,
     ): Promise<CourseEntity> {
-        const course = await this.findOneCourseById(id);
+        const course = await super.findByIdOrFail(id);
         return await this.courseRepo.save({ ...course, ...dto });
     }
 
     async deleteCourse(id: number): Promise<number> {
-        await this.findOneCourseById(id);
+        await super.findByIdOrFail(id);
         await this.courseRepo.delete({ id });
         return id;
     }
