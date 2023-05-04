@@ -22,26 +22,26 @@ export class AssignmentController {
     async findAll(
         @Query() optionsDTO: RequestManyDTO,
     ): Promise<ResponseManyDTO<AssignmentEntity>> {
-        return await this.assService.findAllAssignments(optionsDTO);
+        return await this.assService.findMany(optionsDTO);
     }
 
     @Get(':id')
     async findOneById(@Param('id') id: number) {
-        return await this.assService.findOneAssignmentById(id);
+        return await this.assService.findByIdOrFail(id);
     }
 
     @Post()
     async create(@Body() dto: CreateAssignmentDTO) {
-        return await this.assService.createAssignment(dto);
+        return await this.assService.createOne(dto);
     }
 
     @Post(':id')
     async update(@Param('id') id: number, @Body() dto: UpdateAssignmentDTO) {
-        return await this.assService.updateAssignment(id, dto);
+        return await this.assService.updateOne(id, dto);
     }
 
     @Delete(':id')
     async delete(@Param('id') id: number) {
-        return await this.assService.deleteAssignment(id);
+        return await this.assService.deleteOne(id);
     }
 }

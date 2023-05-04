@@ -41,17 +41,17 @@ export class AnswerController {
         )
         file: Express.Multer.File,
     ) {
-        return await (this.answerService as AnswerService).upload(dto, file);
+        return await this.answerService.upload(dto, file);
     }
 
     @Post('check')
     async check(@Body() dto: CheckAnswerDTO) {
         console.log(dto);
-        return await (this.answerService as AnswerService).check(dto);
+        return await this.answerService.check(dto);
     }
 
     @Post('status')
     async status(@Body() dto: CheckAnswerDTO) {
-        return await (this.answerService as AnswerService).getStatus(dto);
+        return await this.answerService.getStatus(dto);
     }
 }
