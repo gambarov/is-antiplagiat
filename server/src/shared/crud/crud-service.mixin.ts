@@ -9,6 +9,7 @@ import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Type, mixin } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
 
 export interface ICrudService<T> {
     repo: Repository<T>;
@@ -18,8 +19,8 @@ export interface ICrudService<T> {
         optionsDTO: RequestManyDTO,
         options?: FindManyOptions<T>,
     ): Promise<ResponseManyDTO<T>>;
-    createOne(dto: any): Promise<T>;
-    updateOne(id: number, dto: any): Promise<T>;
+    createOne(dto: T | Partial<T>): Promise<T>;
+    updateOne(id: number, dto: T | Partial<T>): Promise<T>;
     deleteOne(id: number): Promise<number>;
 }
 
@@ -57,12 +58,12 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
             return new ResponseManyDTO(entities, meta);
         }
 
-        async createOne(dto: any): Promise<T> {
-            const entity = this.repo.save(this.repo.create(dto)) as T;
-            return await entity;
+        async createOne(dto: T | Partial<T>): Promise<T> {
+            const entity = this.prepareToSave(dto);
+            return this.repo.save(this.repo.create(entity)) as T;
         }
 
-        async updateOne(id: number, dto: any): Promise<T> {
+        async updateOne(id: number, dto: T | Partial<T>): Promise<T> {
             const entity = await this.findByIdOrFail(id);
             return await this.repo.save({ ...entity, ...dto });
         }
@@ -71,6 +72,14 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
             await this.findByIdOrFail(id);
             await this.repo.delete({ id } as unknown as FindOptionsWhere<T>);
             return id;
+        }
+
+        protected get entityType(): Type<T> {
+            return this.repo.target as Type<T>;
+        }
+
+        protected prepareToSave(dto: T | Partial<T>): T {
+            return plainToInstance(this.entityType, dto);
         }
     }
 
