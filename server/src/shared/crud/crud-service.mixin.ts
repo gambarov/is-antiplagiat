@@ -8,9 +8,11 @@ import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Type } from '@nestjs/common';
+import { Type, mixin } from '@nestjs/common';
 
 export interface ICrudService<T> {
+    repo: Repository<T>;
+
     findByIdOrFail(id: number, options?: FindOneOptions<T>): Promise<T>;
     findMany(
         optionsDTO: RequestManyDTO,
@@ -25,7 +27,7 @@ type Constructor<I> = new (...args: any[]) => I;
 
 export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
     class CrudServiceHost implements ICrudService<T> {
-        @InjectRepository(entity) readonly repo: Repository<T>;
+        @InjectRepository(entity) public readonly repo: Repository<T>;
 
         async findByIdOrFail(id: number, options?: FindOneOptions<T>) {
             const findOptions: FindOneOptions<T> = {
@@ -72,5 +74,5 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
         }
     }
 
-    return CrudServiceHost;
+    return mixin(CrudServiceHost);
 }
