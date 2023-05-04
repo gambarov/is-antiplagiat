@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { CourseEntity } from './course.entity';
 import { CrudService } from 'src/shared/crud/crud-service.service';
 import { CourseService } from './course.service';
@@ -21,8 +21,8 @@ export class CourseController {
 
     @Get()
     async findAll(
-        @Query() optionsDTO: PaginatedOptionsDTO,
-    ): Promise<PaginatedDTO<CourseEntity>> {
+        @Query() optionsDTO: RequestManyDTO,
+    ): Promise<ResponseManyDTO<CourseEntity>> {
         return await this.courseService.findAllPaginated(optionsDTO);
     }
 

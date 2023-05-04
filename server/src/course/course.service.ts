@@ -4,8 +4,8 @@ import { CourseEntity } from './course.entity';
 import { Repository } from 'typeorm';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { CrudService } from 'src/shared/crud/crud-service.service';
 
 @Injectable()
@@ -24,8 +24,8 @@ export class CourseService extends CrudService(CourseEntity) {
     }
 
     async findAllPaginated(
-        optionsDTO: PaginatedOptionsDTO,
-    ): Promise<PaginatedDTO<CourseEntity>> {
+        optionsDTO: RequestManyDTO,
+    ): Promise<ResponseManyDTO<CourseEntity>> {
         return await super.findMany(optionsDTO, {
             order: { id: optionsDTO.order },
         });

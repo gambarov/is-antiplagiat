@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginatedMetaDTOParams } from './paginated-meta-params.dto';
+import { RequestManyDTO } from './request-many.dto';
 
-export class PaginatedMetaDTO {
+interface ResponseManyMetaDTOParams {
+    requestDto: RequestManyDTO;
+    itemCount: number;
+}
+
+export class ResponseManyMetaDTO {
     @ApiProperty()
     readonly page: number;
 
@@ -20,9 +25,9 @@ export class PaginatedMetaDTO {
     @ApiProperty()
     readonly hasNextPage: boolean;
 
-    constructor({ paginatedOptionsDTO, itemCount }: PaginatedMetaDTOParams) {
-        this.page = paginatedOptionsDTO.page;
-        this.take = paginatedOptionsDTO.take;
+    constructor({ requestDto, itemCount }: ResponseManyMetaDTOParams) {
+        this.page = requestDto.page;
+        this.take = requestDto.take;
         this.itemCount = itemCount;
         this.pageCount = Math.ceil(this.itemCount / this.take);
         this.hasPreviousPage = this.page > 1;

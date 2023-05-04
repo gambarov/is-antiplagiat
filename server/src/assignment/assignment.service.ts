@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AssignmentEntity } from './assignment.entity';
 import { Repository } from 'typeorm';
-import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { CreateAssignmentDTO } from './dto/create-assignment.dto';
 import { UpdateAssignmentDTO } from './dto/update-assignment.dto';
 
@@ -20,17 +20,17 @@ export class AssignmentService {
     }
 
     async findAllAssignments(
-        optionsDTO: PaginatedOptionsDTO,
-    ): Promise<PaginatedDTO<AssignmentEntity>> {
+        optionsDTO: RequestManyDTO,
+    ): Promise<ResponseManyDTO<AssignmentEntity>> {
         const [entities, itemCount] = await this.assignmentRepo.findAndCount({
             take: optionsDTO.take,
             skip: optionsDTO.skip,
             order: { name: optionsDTO.order },
         });
 
-        const meta = new PaginatedMetaDTO({
+        const meta = new ResponseManyMetaDTO({
             itemCount,
-            paginatedOptionsDTO: optionsDTO,
+            requestDto: optionsDTO,
         });
 
         return {

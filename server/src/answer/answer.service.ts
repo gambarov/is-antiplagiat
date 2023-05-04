@@ -9,9 +9,9 @@ import { AnswerResultEntity } from './entites/answer-result.entity';
 import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { AnswerResultStatus } from './enums/answer-result-status.enum';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
+import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { CrudService } from 'src/shared/crud/crud-service.service';
 
 @Injectable()
@@ -87,8 +87,8 @@ export class AnswerService extends CrudService(AnswerEntity) {
     }
 
     async findAll(
-        optionsDTO: PaginatedOptionsDTO,
-    ): Promise<PaginatedDTO<AnswerEntity>> {
+        optionsDTO: RequestManyDTO,
+    ): Promise<ResponseManyDTO<AnswerEntity>> {
         const [entities, itemCount] = await this.answerRepo.findAndCount({
             take: optionsDTO.take,
             skip: optionsDTO.skip,
@@ -96,9 +96,9 @@ export class AnswerService extends CrudService(AnswerEntity) {
             relations: ['result'],
         });
 
-        const meta = new PaginatedMetaDTO({
+        const meta = new ResponseManyMetaDTO({
             itemCount,
-            paginatedOptionsDTO: optionsDTO,
+            requestDto: optionsDTO,
         });
 
         return {

@@ -2,17 +2,12 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
 
-export interface PaginatedMetaDTOParams {
-    paginatedOptionsDTO: PaginatedOptionsDTO;
-    itemCount: number;
-}
-
 export enum PaginatedOrder {
     ASC = 'ASC',
     DESC = 'DESC',
 }
 
-export class PaginatedOptionsDTO {
+export class RequestManyDTO {
     @ApiPropertyOptional({ enum: PaginatedOrder, default: PaginatedOrder.ASC })
     @IsEnum(PaginatedOrder)
     @IsOptional()

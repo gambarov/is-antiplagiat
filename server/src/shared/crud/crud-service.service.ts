@@ -4,15 +4,15 @@ import {
     FindOptionsWhere,
     FindOneOptions,
 } from 'typeorm';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
+import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Type } from '@nestjs/common';
 
 export interface ICrudService<T> {
     findByIdOrFail(id: number, options?: FindOneOptions<T>): Promise<T>;
-    findMany(optionsDTO: PaginatedOptionsDTO, options?: FindManyOptions<T>);
+    findMany(optionsDTO: RequestManyDTO, options?: FindManyOptions<T>);
 }
 
 type Constructor<I> = new (...args: any[]) => I;
@@ -32,18 +32,18 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
         }
 
         async findMany(
-            optionsDTO: PaginatedOptionsDTO,
+            optionsDTO: RequestManyDTO,
             options?: FindManyOptions<T>,
-        ): Promise<PaginatedDTO<T>> {
+        ): Promise<ResponseManyDTO<T>> {
             const [entities, itemCount] = await this.repo.findAndCount({
                 ...options,
                 take: optionsDTO.take,
                 skip: optionsDTO.skip,
             });
 
-            const meta = new PaginatedMetaDTO({
+            const meta = new ResponseManyMetaDTO({
                 itemCount,
-                paginatedOptionsDTO: optionsDTO,
+                requestDto: optionsDTO,
             });
 
             return {

@@ -8,9 +8,9 @@ import {
     Query,
 } from '@nestjs/common';
 import { AssignmentService } from './assignment.service';
-import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
+import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
 import { AssignmentEntity } from './assignment.entity';
-import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
 import { UpdateAssignmentDTO } from './dto/update-assignment.dto';
 import { CreateAssignmentDTO } from './dto/create-assignment.dto';
 
@@ -20,8 +20,8 @@ export class AssignmentController {
 
     @Get()
     async findAll(
-        @Query() optionsDTO: PaginatedOptionsDTO,
-    ): Promise<PaginatedDTO<AssignmentEntity>> {
+        @Query() optionsDTO: RequestManyDTO,
+    ): Promise<ResponseManyDTO<AssignmentEntity>> {
         return await this.assService.findAllAssignments(optionsDTO);
     }
 
