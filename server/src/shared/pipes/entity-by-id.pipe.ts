@@ -4,6 +4,7 @@ import { Inject } from '@nestjs/common';
 
 @Injectable()
 export class EntityByIdPipe<T> implements PipeTransform<number, Promise<T>> {
+    // FIXME:
     constructor(
         @Inject('CRUD_SERVICE') private readonly crudService: ICrudService<T>,
     ) {}
