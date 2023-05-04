@@ -19,32 +19,29 @@ export class CourseController {
     constructor(private courseService: CourseService) {}
 
     @Get()
-    async findAll(
+    async findMany(
         @Query() optionsDTO: RequestManyDTO,
     ): Promise<ResponseManyDTO<CourseEntity>> {
-        return await this.courseService.findAllPaginated(optionsDTO);
+        return await this.courseService.findMany(optionsDTO);
     }
 
     @Get(':id')
-    async findById(@Param('id') id: number) {
+    async findOne(@Param('id') id: number) {
         return await this.courseService.findByIdOrFail(id);
     }
 
     @Post()
-    async create(@Body() dto: CreateCourseDTO) {
-        return await (this.courseService as CourseService).createCourse(dto);
+    async createOne(@Body() dto: CreateCourseDTO) {
+        return await this.courseService.createOne(dto);
     }
 
     @Post(':id')
-    async update(@Param('id') id: number, @Body() dto: UpdateCourseDTO) {
-        return await (this.courseService as CourseService).updateCourse(
-            id,
-            dto,
-        );
+    async updateOne(@Param('id') id: number, @Body() dto: UpdateCourseDTO) {
+        return await this.courseService.updateOne(id, dto);
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: number) {
-        return await (this.courseService as CourseService).deleteCourse(id);
+    async deleteOne(@Param('id') id: number) {
+        return await this.courseService.deleteOne(id);
     }
 }

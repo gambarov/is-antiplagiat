@@ -9,9 +9,6 @@ import { AnswerResultEntity } from './entites/answer-result.entity';
 import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { AnswerResultStatus } from './enums/answer-result-status.enum';
-import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
-import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
-import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
 import { CrudService } from 'src/shared/crud/crud-service.mixin';
 
 @Injectable()
@@ -24,7 +21,7 @@ export class AnswerService extends CrudService(AnswerEntity) {
         private antiplagiatService: AntiplagiatService,
         private fileService: FileService,
     ) {
-        super(answerRepo);
+        super();
     }
 
     async upload(
@@ -77,33 +74,5 @@ export class AnswerService extends CrudService(AnswerEntity) {
         }
 
         return status;
-    }
-
-    async findOneById(id: number): Promise<AnswerEntity> {
-        return await this.answerRepo.findOneOrFail({
-            where: { id },
-            relations: ['result'],
-        });
-    }
-
-    async findAll(
-        optionsDTO: RequestManyDTO,
-    ): Promise<ResponseManyDTO<AnswerEntity>> {
-        const [entities, itemCount] = await this.answerRepo.findAndCount({
-            take: optionsDTO.take,
-            skip: optionsDTO.skip,
-            order: { id: optionsDTO.order },
-            relations: ['result'],
-        });
-
-        const meta = new ResponseManyMetaDTO({
-            itemCount,
-            requestDto: optionsDTO,
-        });
-
-        return {
-            data: entities,
-            meta,
-        };
     }
 }
