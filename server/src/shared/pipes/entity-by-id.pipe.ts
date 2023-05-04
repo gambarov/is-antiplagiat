@@ -1,18 +1,14 @@
-import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { BaseService } from '../services/base-service.service';
-import { BaseEntity } from '../entities/base-entity';
+import { Injectable, PipeTransform } from '@nestjs/common';
+import { ICrudService } from '../services/crud-service.service';
+import { Inject } from '@nestjs/common';
 
 @Injectable()
-export class EntityByIdPipe<T extends BaseEntity>
-    implements PipeTransform<number, Promise<T>>
-{
+export class EntityByIdPipe<T> implements PipeTransform<number, Promise<T>> {
     constructor(
-        // private readonly entity: T,
-        private readonly service: BaseService<T>,
+        @Inject('CRUD_SERVICE') private readonly crudService: ICrudService<T>,
     ) {}
 
-    async transform(id: number, metadata: ArgumentMetadata): Promise<T> {
-        const entity = await this.service.findByIdOrFail(id as number);
-        return entity;
+    async transform(id: number): Promise<T> {
+        return this.crudService.findByIdOrFail(id);
     }
 }
