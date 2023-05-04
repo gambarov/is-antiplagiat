@@ -12,7 +12,10 @@ import { Type } from '@nestjs/common';
 
 export interface ICrudService<T> {
     findByIdOrFail(id: number, options?: FindOneOptions<T>): Promise<T>;
-    findMany(optionsDTO: RequestManyDTO, options?: FindManyOptions<T>);
+    findMany(
+        optionsDTO: RequestManyDTO,
+        options?: FindManyOptions<T>,
+    ): Promise<ResponseManyDTO<T>>;
 }
 
 type Constructor<I> = new (...args: any[]) => I;
@@ -46,10 +49,7 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
                 requestDto: optionsDTO,
             });
 
-            return {
-                data: entities,
-                meta,
-            };
+            return new ResponseManyDTO(entities, meta);
         }
     }
 
