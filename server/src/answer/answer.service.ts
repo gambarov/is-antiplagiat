@@ -9,10 +9,10 @@ import { AnswerResultEntity } from './entites/answer-result.entity';
 import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { AnswerResultStatus } from './enums/answer-result-status.enum';
-import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
-import { CrudService } from 'src/shared/services/crud-service.service';
+import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
+import { CrudService } from 'src/shared/crud/crud-service.service';
 
 @Injectable()
 export class AnswerService extends CrudService(AnswerEntity) {

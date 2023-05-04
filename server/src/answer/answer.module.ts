@@ -9,7 +9,7 @@ import { AnswerService } from './answer.service';
 import {
     CrudService,
     ICrudService,
-} from 'src/shared/services/crud-service.service';
+} from 'src/shared/crud/crud-service.service';
 
 @Module({
     providers: [

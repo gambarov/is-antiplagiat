@@ -4,9 +4,9 @@ import {
     FindOptionsWhere,
     FindOneOptions,
 } from 'typeorm';
-import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
-import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
+import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
+import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Type } from '@nestjs/common';
 

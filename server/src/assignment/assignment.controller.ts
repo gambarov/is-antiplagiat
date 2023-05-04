@@ -8,9 +8,9 @@ import {
     Query,
 } from '@nestjs/common';
 import { AssignmentService } from './assignment.service';
-import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
+import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
 import { AssignmentEntity } from './assignment.entity';
-import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
+import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
 import { UpdateAssignmentDTO } from './dto/update-assignment.dto';
 import { CreateAssignmentDTO } from './dto/create-assignment.dto';
 

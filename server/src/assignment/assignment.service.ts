@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AssignmentEntity } from './assignment.entity';
 import { Repository } from 'typeorm';
-import { PaginatedMetaDTO } from 'src/shared/dto/paginated-meta.dto';
-import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
+import { PaginatedMetaDTO } from 'src/shared/crud/dto/paginated-meta.dto';
+import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
 import { CreateAssignmentDTO } from './dto/create-assignment.dto';
 import { UpdateAssignmentDTO } from './dto/update-assignment.dto';
 

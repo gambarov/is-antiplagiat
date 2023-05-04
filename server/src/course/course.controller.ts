@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { CreateCourseDTO } from './dto/create-course.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
-import { PaginatedOptionsDTO } from 'src/shared/dto/paginated-meta-params.dto';
-import { PaginatedDTO } from 'src/shared/dto/paginated.dto';
+import { PaginatedOptionsDTO } from 'src/shared/crud/dto/paginated-meta-params.dto';
+import { PaginatedDTO } from 'src/shared/crud/dto/paginated.dto';
 import { CourseEntity } from './course.entity';
-import { CrudService } from 'src/shared/services/crud-service.service';
+import { CrudService } from 'src/shared/crud/crud-service.service';
 import { CourseService } from './course.service';
 
 @Controller('courses')

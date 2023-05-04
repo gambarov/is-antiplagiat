@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
-import { ICrudService } from '../services/crud-service.service';
+import { ICrudService } from '../crud/crud-service.service';
 import { Inject } from '@nestjs/common';
 
 @Injectable()
