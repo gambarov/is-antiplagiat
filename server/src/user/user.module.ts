@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
+import { UserEntity } from './entities/user.entity';
 import { StudentEntity } from './entities/student.entity';
-import { SupervisorEntity } from './supervisor.entity';
+import { SupervisorEntity } from './entities/supervisor.entity';
 
 @Module({
     controllers: [UserController],
