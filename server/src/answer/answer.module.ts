@@ -6,10 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnswerEntity } from './entites/answer.entity';
 import { AnswerResultEntity } from './entites/answer-result.entity';
 import { AnswerService } from './answer.service';
-import {
-    CrudService,
-    ICrudService,
-} from 'src/shared/crud/crud-service.mixin';
+import { CrudService } from 'src/shared/crud/crud-service.mixin';
 
 @Module({
     providers: [
