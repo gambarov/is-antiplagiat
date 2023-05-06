@@ -18,6 +18,7 @@ import { SubmissionModule } from './submission/submission.module';
 import { AnswerEntity } from './answer/entites/answer.entity';
 import { AnswerResultEntity } from './answer/entites/answer-result.entity';
 import { SubmissionEntity } from './submission/entities/submission.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -53,6 +54,7 @@ import { SubmissionEntity } from './submission/entities/submission.entity';
         AssignmentModule,
         AnswerModule,
         SubmissionModule,
+        AuthModule,
     ],
 })
 export class AppModule {}
