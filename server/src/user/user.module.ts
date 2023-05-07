@@ -12,5 +12,6 @@ import { SupervisorEntity } from './entities/supervisor.entity';
     imports: [
         TypeOrmModule.forFeature([UserEntity, StudentEntity, SupervisorEntity]),
     ],
+    exports: [UserService],
 })
 export class UserModule {}
