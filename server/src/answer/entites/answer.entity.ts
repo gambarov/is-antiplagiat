@@ -1,5 +1,4 @@
 import {
-    BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
@@ -11,7 +10,7 @@ import {
 } from 'typeorm';
 import { AnswerStatus } from '../enums/answer-status.enum';
 import { AnswerResultEntity } from './answer-result.entity';
-import { SubmissionEntity } from 'src/submission/entities/submission.entity';
+import { SubmissionEntity } from '../../submission/entities/submission.entity';
 
 @Entity('answers')
 export class AnswerEntity {

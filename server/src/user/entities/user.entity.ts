@@ -20,22 +20,22 @@ export class UserEntity {
     @Column()
     password: string;
 
-    @Column()
+    @Column({ default: '', length: 256, type: 'varchar', unique: true })
     refresh_token: string;
 
-    @Column()
+    @Column({ default: '' })
     surname: string;
 
-    @Column()
+    @Column({ default: '' })
     name: string;
 
-    @Column()
+    @Column({ default: '' })
     patronymic: string;
 
-    @OneToOne(() => StudentEntity)
+    @OneToOne(() => StudentEntity, { nullable: true })
     student: StudentEntity;
 
-    @OneToOne(() => SupervisorEntity)
+    @OneToOne(() => SupervisorEntity, { nullable: true })
     supervisor: SupervisorEntity;
 
     @CreateDateColumn()

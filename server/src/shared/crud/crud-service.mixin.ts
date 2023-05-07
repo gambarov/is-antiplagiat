@@ -4,9 +4,9 @@ import {
     FindOptionsWhere,
     FindOneOptions,
 } from 'typeorm';
-import { RequestManyDTO } from 'src/shared/crud/dto/request-many.dto';
-import { ResponseManyDTO } from 'src/shared/crud/dto/response-many.dto';
-import { ResponseManyMetaDTO } from 'src/shared/crud/dto/response-many-meta.dto';
+import { RequestManyDTO } from './dto/request-many.dto';
+import { ResponseManyDTO } from './dto/response-many.dto';
+import { ResponseManyMetaDTO } from './dto/response-many-meta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Type, mixin } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';

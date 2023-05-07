@@ -9,7 +9,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { SubmissionEntity } from 'src/submission/entities/submission.entity';
+import { SubmissionEntity } from '../../submission/entities/submission.entity';
 
 @Entity('students')
 export class StudentEntity {

@@ -1,4 +1,4 @@
-import { CourseEntity } from 'src/course/entities/course.entity';
+import { CourseEntity } from '../../course/entities/course.entity';
 import {
     Column,
     CreateDateColumn,
@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { SubmissionEntity } from 'src/submission/entities/submission.entity';
+import { SubmissionEntity } from '../../submission/entities/submission.entity';
 
 @Entity('assignments')
 export class AssignmentEntity {
