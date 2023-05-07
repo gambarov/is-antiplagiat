@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UserEntity } from '../user/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { SignInDTO } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { TokenService } from './token.service';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -21,11 +21,11 @@ export class AuthService {
             where: { login: dto.login },
         });
 
-        if (!(await bcrypt.compare(dto.password, user?.password))) {
-            throw new UnauthorizedException('Неправильный логин и/или пароль');
-        }
+        const isMatch =
+            user && (await bcrypt.compare(dto.password, user.password));
 
-        return await this.updateUserTokens(user);
+        if (isMatch) return await this.updateUserTokens(user);
+        else throw new UnauthorizedException('Неправильный логин и/или пароль');
     }
 
     async logout(refreshToken: string) {
@@ -50,9 +50,9 @@ export class AuthService {
     }
 
     private async updateUserTokens(user: UserEntity) {
-        const { password: _, ...payload } = user;
+        const { id } = user;
 
-        const tokens = await this.tokenService.generateTokens(payload);
+        const tokens = await this.tokenService.generateTokens({ id });
 
         await this.userService.repo.update(
             { id: user.id },
