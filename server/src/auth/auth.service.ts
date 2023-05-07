@@ -27,7 +27,7 @@ export class AuthService {
             throw new UnauthorizedException('Неправильный логин и/или пароль');
         }
 
-        return await this.updateTokens(user);
+        return await this.updateUserTokens(user);
     }
 
     async logout(refreshToken: string) {
@@ -48,10 +48,10 @@ export class AuthService {
 
         if (!user) throw new UnauthorizedException();
 
-        return await this.updateTokens(user);
+        return await this.updateUserTokens(user);
     }
 
-    private async updateTokens(user: UserEntity) {
+    private async updateUserTokens(user: UserEntity) {
         const { password: _, ...payload } = user;
 
         const tokens = await this.tokenService.generateTokens(payload);
