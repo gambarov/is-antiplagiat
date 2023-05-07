@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { SignInDTO } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
         @InjectRepository(UserEntity)
         private readonly userRepo: Repository<UserEntity>,
         private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
     ) {}
 
     async signIn(dto: SignInDTO) {
@@ -38,7 +40,7 @@ export class AuthService {
         const user = await this.jwtService.verifyAsync<UserEntity>(
             refreshToken,
             {
-                secret: process.env.JWT_REFRESH_SECRET,
+                secret: this.configService.get('JWT_REFRESH_SECRET'),
             },
         );
 
@@ -63,12 +65,12 @@ export class AuthService {
     private async generateTokens(payload: Partial<UserEntity>) {
         const accessToken = await this.jwtService.signAsync(payload, {
             expiresIn: '1d',
-            secret: process.env.JWT_ACCESS_SECRET,
+            secret: this.configService.get('JWT_ACCESS_SECRET'),
         });
 
         const refreshToken = await this.jwtService.signAsync(payload, {
             expiresIn: '30d',
-            secret: process.env.JWT_REFRESH_SECRET,
+            secret: this.configService.get('JWT_REFRESH_SECRET'),
         });
 
         return {
