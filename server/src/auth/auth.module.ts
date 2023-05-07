@@ -6,6 +6,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
+import { TokenService } from './token.service';
 
 @Module({
     controllers: [AuthController],
@@ -15,6 +16,7 @@ import { AuthGuard } from './auth.guard';
             provide: APP_GUARD,
             useClass: AuthGuard,
         },
+        TokenService,
     ],
     imports: [
         TypeOrmModule.forFeature([UserEntity]),
