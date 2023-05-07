@@ -14,8 +14,6 @@ import { CrudService } from 'src/shared/crud/crud-service.mixin';
 @Injectable()
 export class AnswerService extends CrudService(AnswerEntity) {
     constructor(
-        @InjectRepository(AnswerEntity)
-        private answerRepo: Repository<AnswerEntity>,
         @InjectRepository(AnswerResultEntity)
         private resultRepo: Repository<AnswerResultEntity>,
         private antiplagiatService: AntiplagiatService,
@@ -39,12 +37,11 @@ export class AnswerService extends CrudService(AnswerEntity) {
             },
         });
 
-        const answer = this.answerRepo.create({
+        const answer = this.createOne({
             ...dto,
             file_url: fileName,
             result: this.resultRepo.create({ DocId }),
         });
-        await this.answerRepo.save(answer);
         return answer;
     }
 
