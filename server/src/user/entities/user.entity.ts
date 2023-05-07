@@ -21,6 +21,9 @@ export class UserEntity {
     password: string;
 
     @Column()
+    refresh_token: string;
+
+    @Column()
     surname: string;
 
     @Column()
