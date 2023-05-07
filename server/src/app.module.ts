@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AntiplagiatModule } from './antiplagiat/antiplagiat.module';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -28,24 +28,28 @@ import { AuthModule } from './auth/auth.module';
         ServeStaticModule.forRoot({
             rootPath: resolve(__dirname, 'static'),
         }),
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT),
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
-            entities: [
-                UserEntity,
-                StudentEntity,
-                SupervisorEntity,
-                CourseEntity,
-                AssignmentEntity,
-                AnswerEntity,
-                AnswerResultEntity,
-                SubmissionEntity,
-            ],
-            synchronize: true,
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                type: 'mysql',
+                host: configService.get('DB_HOST'),
+                port: configService.get('DB_PORT'),
+                username: configService.get('DB_USERNAME'),
+                password: configService.get('DB_PASSWORD'),
+                database: configService.get('DB_DATABASE'),
+                entities: [
+                    UserEntity,
+                    StudentEntity,
+                    SupervisorEntity,
+                    CourseEntity,
+                    AssignmentEntity,
+                    AnswerEntity,
+                    AnswerResultEntity,
+                    SubmissionEntity,
+                ],
+                synchronize: true,
+            }),
         }),
         AntiplagiatModule,
         FileModule,
