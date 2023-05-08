@@ -1,7 +1,7 @@
 import { AuthService } from '../auth.service';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../../user/user.service';
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from '../token.service';
@@ -19,9 +19,10 @@ import { AnswerResultEntity } from '../../answer/entites/answer-result.entity';
 describe('AuthService', () => {
     let authService: AuthService;
     let userService: UserService;
+    let moduleRef: TestingModule;
 
-    beforeEach(async () => {
-        const moduleRef = await Test.createTestingModule({
+    beforeAll(async () => {
+        moduleRef = await Test.createTestingModule({
             imports: [
                 ConfigModule.forRoot({ envFilePath: '.env' }),
                 TypeOrmModule.forRootAsync({
@@ -55,6 +56,10 @@ describe('AuthService', () => {
 
         authService = moduleRef.get<AuthService>(AuthService);
         userService = moduleRef.get<UserService>(UserService);
+    });
+
+    afterAll(async () => {
+        await moduleRef.close();
     });
 
     describe('signin', () => {
