@@ -48,16 +48,7 @@ describe('AuthService', () => {
                         synchronize: true,
                     }),
                 }),
-                TypeOrmModule.forFeature([
-                    UserEntity,
-                    StudentEntity,
-                    SupervisorEntity,
-                    CourseEntity,
-                    AssignmentEntity,
-                    AnswerEntity,
-                    AnswerResultEntity,
-                    SubmissionEntity,
-                ]),
+                TypeOrmModule.forFeature([UserEntity]),
             ],
             providers: [AuthService, JwtService, UserService, TokenService],
         }).compile();
@@ -68,7 +59,6 @@ describe('AuthService', () => {
 
     describe('signin', () => {
         it('should return a JWT token if the user is authenticated', async () => {
-            // Arrange
             await userService.createOne({
                 login: 'testuser',
                 password: await bcrypt.hash('testpassword', 1),
@@ -85,7 +75,6 @@ describe('AuthService', () => {
         });
 
         it('should throw an error if the user is not authenticated', async () => {
-            // Arrange
             const signinDto = {
                 login: 'nonexisted',
                 password: 'nonexisted',
