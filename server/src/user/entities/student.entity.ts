@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SubmissionEntity } from '../../submission/entities/submission.entity';
-import { CourseEntity } from 'src/course/entities/course.entity';
+import { CourseEntity } from '../../course/entities/course.entity';
 
 @Entity('students')
 export class StudentEntity {
