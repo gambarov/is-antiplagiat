@@ -12,6 +12,7 @@ import {
     Unique,
     UpdateDateColumn,
 } from 'typeorm';
+import { SubmissionStatus } from '../enums/submission-status.enum';
 
 @Entity('submissions')
 @Unique(['student', 'assignment'])
@@ -32,7 +33,14 @@ export class SubmissionEntity {
     })
     answers: AnswerEntity[];
 
-    @Column()
+    @Column({
+        type: 'enum',
+        enum: SubmissionStatus,
+        default: SubmissionStatus.NOT_SUBMITTED,
+    })
+    status: SubmissionStatus;
+
+    @Column({ default: '' })
     comment: string;
 
     @CreateDateColumn()
