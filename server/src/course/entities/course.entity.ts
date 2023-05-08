@@ -1,8 +1,11 @@
+import { StudentEntity } from 'src/user/entities/student.entity';
 import { AssignmentEntity } from '../../assignment/entities/assignment.entity';
 import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinTable,
+    ManyToMany,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -18,6 +21,10 @@ export class CourseEntity {
 
     @OneToMany(() => AssignmentEntity, (ass) => ass.course)
     assignments: AssignmentEntity[];
+
+    @ManyToMany(() => StudentEntity, (student) => student.courses)
+    @JoinTable()
+    students: StudentEntity[];
 
     @CreateDateColumn()
     created_at: Date;

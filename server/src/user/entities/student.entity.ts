@@ -3,6 +3,7 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
+    ManyToMany,
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
@@ -10,6 +11,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SubmissionEntity } from '../../submission/entities/submission.entity';
+import { CourseEntity } from 'src/course/entities/course.entity';
 
 @Entity('students')
 export class StudentEntity {
@@ -19,6 +21,11 @@ export class StudentEntity {
     @OneToOne(() => UserEntity, { cascade: true })
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
+
+    @ManyToMany(() => CourseEntity, (course) => course.students, {
+        cascade: true,
+    })
+    courses: CourseEntity[];
 
     @OneToMany(() => SubmissionEntity, (sub) => sub.student)
     submissions: SubmissionEntity[];
