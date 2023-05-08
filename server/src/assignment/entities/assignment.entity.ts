@@ -19,9 +19,6 @@ export class AssignmentEntity {
     @Column()
     name: string;
 
-    @Column()
-    topic: string;
-
     @ManyToOne(() => CourseEntity, (course) => course.assignments, {
         cascade: true,
     })
