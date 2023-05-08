@@ -13,7 +13,21 @@ async function bootstrap() {
     app.useGlobalFilters(new EntityNotFoundExceptionFilter());
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-    const config = new DocumentBuilder().build();
+    const config = new DocumentBuilder()
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                name: 'JWT',
+                description: 'Enter JWT token',
+                in: 'header',
+            },
+            // This name here is important for matching up with @ApiBearerAuth()
+            'JWT-auth',
+        )
+        .addSecurityRequirements('JWT-auth')
+        .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
 

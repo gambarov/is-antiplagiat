@@ -15,6 +15,7 @@ import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { EntityByIdPipe } from 'src/shared/pipes/entity-by-id.pipe';
 import { AnswerEntity } from './entites/answer.entity';
+import { ApiConsumes } from '@nestjs/swagger';
 
 @Controller('answers')
 export class AnswerController {
@@ -26,6 +27,7 @@ export class AnswerController {
     }
 
     @Post('upload')
+    @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('file'))
     async upload(
         @Body() dto: UploadAnswerDTO,
