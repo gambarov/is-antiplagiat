@@ -3,8 +3,11 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { EntityNotFoundExceptionFilter } from './shared/filters/entity-not-found-exception.filter';
-import { DocumentBuilder } from '@nestjs/swagger';
-import { SwaggerModule } from '@nestjs/swagger/dist';
+import {
+    DocumentBuilder,
+    SwaggerModule,
+    SwaggerDocumentOptions,
+} from '@nestjs/swagger';
 
 async function bootstrap() {
     const PORT = process.env.PORT || 3000;
@@ -27,9 +30,14 @@ async function bootstrap() {
             'JWT-auth',
         )
         .addSecurityRequirements('JWT-auth')
+        .setExternalDoc('Postman Collection', 'docs-json')
         .build();
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    const options: SwaggerDocumentOptions = {
+        operationIdFactory: (controllerKey: string, methodKey: string) =>
+            methodKey,
+    };
+    const document = SwaggerModule.createDocument(app, config, options);
+    SwaggerModule.setup('docs', app, document);
 
     await app.listen(PORT, () => {
         console.log(`Server started on port = ${PORT}`);
