@@ -5,9 +5,12 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
+    BeforeInsert,
+    BeforeUpdate,
 } from 'typeorm';
 import { StudentEntity } from './student.entity';
 import { SupervisorEntity } from './supervisor.entity';
+import * as bcrypt from 'bcrypt';
 
 @Entity('users')
 export class UserEntity {
@@ -43,4 +46,12 @@ export class UserEntity {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    saltOrRounds: string | number = 1;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword(): Promise<void> {
+        this.password = await bcrypt.hash(this.password, this.saltOrRounds);
+    }
 }
