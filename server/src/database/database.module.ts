@@ -9,6 +9,7 @@ import { AssignmentEntity } from '../assignment/entities/assignment.entity';
 import { AnswerEntity } from '../answer/entites/answer.entity';
 import { AnswerResultEntity } from '../answer/entites/answer-result.entity';
 import { SubmissionEntity } from '../submission/entities/submission.entity';
+import { buildDataSourceOptions } from '../config/typeorm.config';
 
 @Module({
     imports: [
@@ -16,12 +17,7 @@ import { SubmissionEntity } from '../submission/entities/submission.entity';
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => ({
-                type: 'mysql',
-                host: configService.get('DB_HOST'),
-                port: configService.get('DB_PORT'),
-                username: configService.get('DB_USERNAME'),
-                password: configService.get('DB_PASSWORD'),
-                database: configService.get('DB_DATABASE'),
+                ...buildDataSourceOptions(configService),
                 entities: [
                     UserEntity,
                     StudentEntity,
@@ -32,7 +28,7 @@ import { SubmissionEntity } from '../submission/entities/submission.entity';
                     AnswerResultEntity,
                     SubmissionEntity,
                 ],
-                synchronize: true,
+                synchronize: false,
             }),
         }),
     ],
