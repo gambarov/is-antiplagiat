@@ -35,7 +35,9 @@ export class UserEntity {
     @Column({ default: '' })
     patronymic: string;
 
-    @OneToOne(() => StudentEntity, { nullable: true })
+    @OneToOne(() => StudentEntity, (student) => student.user, {
+        nullable: true,
+    })
     student: StudentEntity;
 
     @OneToOne(() => SupervisorEntity, { nullable: true })

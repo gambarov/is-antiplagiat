@@ -18,7 +18,7 @@ export class StudentEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(() => UserEntity, { cascade: true })
+    @OneToOne(() => UserEntity, (user) => user.student, { cascade: true })
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
 
