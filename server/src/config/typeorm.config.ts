@@ -24,7 +24,7 @@ const buildDataSource = async () => {
     return new DataSource({
         ...buildDataSourceOptions(configService),
         entities: ['dist/**/*.entity.js'],
-        migrations: ['dist/database/migrations/*.ts'],
+        migrations: ['dist/database/migrations/*.js'],
     });
 };
 
