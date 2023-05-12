@@ -28,9 +28,7 @@ export class SubmissionEntity {
     @JoinColumn({ name: 'assignment_id' })
     assignment: AssignmentEntity;
 
-    @OneToMany(() => AnswerEntity, (answer) => answer.submission, {
-        cascade: true,
-    })
+    @OneToMany(() => AnswerEntity, (answer) => answer.submission)
     answers: AnswerEntity[];
 
     @Column({

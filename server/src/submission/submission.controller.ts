@@ -14,7 +14,7 @@ import { ResponseManyDTO } from '../shared/crud/dto/response-many.dto';
 import { UpdateSubmissionDTO } from './dto/update-submission.dto';
 import { CreateSubmissionDTO } from './dto/create-submission.dto';
 
-@Controller('submission')
+@Controller('submissions')
 export class SubmissionController {
     constructor(private submService: SubmissionService) {}
 
@@ -27,7 +27,9 @@ export class SubmissionController {
 
     @Get(':id')
     async findOne(@Param('id') id: number) {
-        return await this.submService.findByIdOrFail(id);
+        return await this.submService.findByIdOrFail(id, {
+            relations: ['answers'],
+        });
     }
 
     @Post()
