@@ -19,9 +19,13 @@ export class AnswerEntity {
 
     @ManyToOne(() => SubmissionEntity, (sub) => sub.answers, {
         nullable: false,
+        cascade: true,
     })
     @JoinColumn({ name: 'submission_id' })
     submission: SubmissionEntity;
+
+    @Column()
+    submission_id: number;
 
     @Column({ type: 'enum', enum: AnswerStatus, default: AnswerStatus.PENDING })
     status: AnswerStatus;

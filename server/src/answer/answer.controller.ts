@@ -48,7 +48,6 @@ export class AnswerController {
 
     @Post('check')
     async check(@Body() dto: CheckAnswerDTO) {
-        console.log(dto);
         return await this.answerService.check(dto);
     }
 
