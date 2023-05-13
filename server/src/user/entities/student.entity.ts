@@ -1,4 +1,5 @@
 import {
+    BeforeInsert,
     Column,
     CreateDateColumn,
     Entity,
@@ -12,6 +13,7 @@ import {
 import { UserEntity } from './user.entity';
 import { SubmissionEntity } from '../../submission/entities/submission.entity';
 import { CourseEntity } from '../../course/entities/course.entity';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity('students')
 export class StudentEntity {
@@ -30,7 +32,7 @@ export class StudentEntity {
     @OneToMany(() => SubmissionEntity, (sub) => sub.student)
     submissions: SubmissionEntity[];
 
-    @Column()
+    @Column({ type: 'varchar', length: '40' })
     ExternalUserID: string;
 
     @CreateDateColumn()
@@ -38,4 +40,10 @@ export class StudentEntity {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    // GUID для конкретного пользователя
+    @BeforeInsert()
+    save() {
+        this.ExternalUserID = uuidv4();
+    }
 }
