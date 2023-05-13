@@ -3,6 +3,7 @@ import {
     Repository,
     FindOptionsWhere,
     FindOneOptions,
+    DeepPartial,
 } from 'typeorm';
 import { RequestManyDTO } from './dto/request-many.dto';
 import { ResponseManyDTO } from './dto/response-many.dto';
@@ -19,8 +20,8 @@ export interface ICrudService<T> {
         optionsDTO: RequestManyDTO,
         options?: FindManyOptions<T>,
     ): Promise<ResponseManyDTO<T>>;
-    createOne(dto: T | Partial<T>): Promise<T>;
-    updateOne(id: number, dto: T | Partial<T>): Promise<T>;
+    createOne(dto: T | DeepPartial<T>): Promise<T>;
+    updateOne(id: number, dto: T | DeepPartial<T>): Promise<T>;
     deleteOne(id: number): Promise<number>;
 }
 
@@ -58,12 +59,13 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
             return new ResponseManyDTO(entities, meta);
         }
 
-        async createOne(dto: T | Partial<T>): Promise<T> {
+        async createOne(dto: T | DeepPartial<T>): Promise<T> {
             const entity = this.prepareToSave(dto);
+            console.log(entity);
             return this.repo.save(this.repo.create(entity)) as T;
         }
 
-        async updateOne(id: number, dto: T | Partial<T>): Promise<T> {
+        async updateOne(id: number, dto: T | DeepPartial<T>): Promise<T> {
             const entity = await this.findByIdOrFail(id);
             return await this.repo.save({ ...entity, ...dto });
         }
@@ -78,7 +80,7 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
             return this.repo.target as Type<T>;
         }
 
-        protected prepareToSave(dto: T | Partial<T>): T {
+        protected prepareToSave(dto: T | DeepPartial<T>): T {
             return plainToInstance(this.entityType, dto);
         }
     }
