@@ -10,6 +10,8 @@ import { UploadAnswerDTO } from './dto/upload-answer.dto';
 import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { AnswerResultStatus } from './enums/answer-result-status.enum';
 import { CrudService } from 'src/shared/crud/crud-service.mixin';
+import { AnswerStatus } from './enums/answer-status.enum';
+import { SubmissionStatus } from '../submission/enums/submission-status.enum';
 
 @Injectable()
 export class AnswerService extends CrudService(AnswerEntity) {
@@ -36,13 +38,18 @@ export class AnswerService extends CrudService(AnswerEntity) {
                 ExternalUserID: 'fenditester',
             },
         });
-
-        const answer = this.createOne({
+        // FIXME:
+        // Заметка: не получается обновить только часть объекта, если попытаться, то создается новый с null полями!
+        const { id } = await this.createOne({
             ...dto,
             file_url: fileName,
             result: this.resultRepo.create({ DocId }),
         });
-        return answer;
+        const answer = await this.findByIdOrFail(id, {
+            relations: ['submission'],
+        });
+        answer.submission.status = SubmissionStatus.PENDING;
+        return await this.updateOne(answer.id, answer);
     }
 
     async check(dto: CheckAnswerDTO) {
@@ -52,13 +59,16 @@ export class AnswerService extends CrudService(AnswerEntity) {
     async getStatus({ docId }: CheckAnswerDTO) {
         const status = await this.antiplagiatService.checkStatusWork(docId);
 
+        // Работа прошла проверку
         if (status.Status == 'Ready') {
-            const result = await this.resultRepo.findOneBy({
-                DocId: docId,
+            const result = await this.resultRepo.findOne({
+                where: { DocId: docId },
+                relations: ['answer'],
             });
 
+            // Результат еще не обновлялся
             if (result.Status != AnswerResultStatus.Ready) {
-                this.resultRepo.update(
+                await this.resultRepo.update(
                     { DocId: docId },
                     {
                         ...result,
@@ -67,6 +77,14 @@ export class AnswerService extends CrudService(AnswerEntity) {
                         Status: AnswerResultStatus.Ready,
                     },
                 );
+
+                // FIXME:
+                const answer = await this.findByIdOrFail(result.answer.id, {
+                    relations: ['submission'],
+                });
+                answer.status = AnswerStatus.PASSED;
+                answer.submission.status = SubmissionStatus.PASSED;
+                await this.updateOne(answer.id, answer);
             }
         }
 
