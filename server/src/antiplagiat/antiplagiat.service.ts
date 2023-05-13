@@ -11,10 +11,6 @@ export class AntiplagiatService {
         const res = await this.client.UploadDocumentAsync(options);
         const uploaded = res[0].UploadDocumentResult.Uploaded[0];
         return uploaded.Id.Id;
-
-        // {
-        //     Uploaded: [ { Id: [Object], FileName: 'work.docx', Reason: 'NoError' } ]
-        // }
     }
 
     async checkWork(id: number) {
@@ -22,7 +18,7 @@ export class AntiplagiatService {
             await this.client.CheckDocumentAsync({
                 docId: { Id: id },
             });
-            return { id };
+            return { success: true };
         } catch (error) {
             const fault = error.root.Envelope.Body.Fault;
             console.log(fault.faultstring.$value);

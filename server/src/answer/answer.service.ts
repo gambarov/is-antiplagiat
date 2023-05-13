@@ -28,6 +28,13 @@ export class AnswerService extends CrudService(AnswerEntity) {
         dto: UploadAnswerDTO,
         file: Express.Multer.File,
     ): Promise<AnswerEntity> {
+        // FIXME: Перенести часть логики в SubmissionService
+
+        // TODO: Студент не может загрузить ответ на задание,
+        // если он уже загружал ответ на это задание И (ответ еще не прошел проверку или проверка прошла успешно)
+        // Загрузка возможно, если студент еще не загружал работу
+        // или работа не прошла проверку и была добавлена новая попыка.
+
         const fileName = await this.fileService.uploadFile(file);
 
         const DocId = await this.antiplagiatService.uploadWork({
@@ -77,6 +84,11 @@ export class AnswerService extends CrudService(AnswerEntity) {
                         Status: AnswerResultStatus.Ready,
                     },
                 );
+
+                // TODO: проверка результатов работы (проверка пройдена успешно или нет)
+                // Success on
+                // > 50% при бакалавриате
+                // > % при магистратуре
 
                 // FIXME:
                 const answer = await this.findByIdOrFail(result.answer.id, {
