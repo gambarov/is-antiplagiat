@@ -16,6 +16,7 @@ import { SubmissionEntity } from '../submission/entities/submission.entity';
 import { SubmissionService } from '../submission/submission.service';
 import { StudentEntity } from '../user/entities/student.entity';
 import { StudentEduType } from '../user/enums/student-edu-type.enum';
+import { CheckStatus } from '../antiplagiat/types/check-status.type';
 
 @Injectable()
 export class AnswerService extends CrudService(AnswerEntity) {
@@ -68,11 +69,11 @@ export class AnswerService extends CrudService(AnswerEntity) {
     async getStatus(
         user: UserEntity,
         submission: SubmissionEntity,
-        { docId }: CheckAnswerDTO,
-    ) {
-        const status = await this.antiplagiatService.checkStatusWork(docId);
+        dto: CheckAnswerDTO,
+    ): Promise<AnswerResultEntity> {
+        const status = await this.antiplagiatService.checkStatusWork(dto.docId);
         const result = await this.resultRepo.findOne({
-            where: { DocId: docId },
+            where: { DocId: dto.docId },
             relations: ['answer'],
         });
 
@@ -84,6 +85,15 @@ export class AnswerService extends CrudService(AnswerEntity) {
         )
             return result;
 
+        return await this.updateStatus(result, status, user, submission);
+    }
+
+    private async updateStatus(
+        result: AnswerResultEntity,
+        status: CheckStatus,
+        user: UserEntity,
+        submission: SubmissionEntity,
+    ): Promise<AnswerResultEntity> {
         // Работа прошла проверку
         if (status.Status == 'Ready') {
             // TODO: Если студент не прошел, то нужно открыть новую попытку
@@ -92,28 +102,23 @@ export class AnswerService extends CrudService(AnswerEntity) {
                 status.Summary.DetailedScore.Unknown,
             );
             // FIXME: Думаю есть более хороший вариант для этого
-            submission.status =
-                result.answer.status == AnswerStatus.FAILED
-                    ? SubmissionStatus.FAILED
-                    : SubmissionStatus.PASSED;
+            submission.status = result.answer
+                .status as unknown as SubmissionStatus;
         } else if (status.Status == 'Failed') {
             result.answer.status = AnswerStatus.FAILED;
             submission.comment = status.FailDetails;
             submission.status = SubmissionStatus.FAILED;
         }
 
-        await this.resultRepo.update(
-            { DocId: docId },
-            {
-                ...result,
-                ...status.Summary.DetailedScore,
-                IsSuspicious: status.Summary.IsSuspicious,
-                Status: status.Status as AnswerResultStatus,
-            },
-        );
-        await this.submService.repo.save(submission);
+        const resultToSave: AnswerResultEntity = {
+            ...result,
+            ...status.Summary.DetailedScore,
+            IsSuspicious: status.Summary.IsSuspicious,
+            Status: status.Status as AnswerResultStatus,
+        };
 
-        return status;
+        await this.submService.repo.save(submission);
+        return await this.resultRepo.save(resultToSave);
     }
 
     // FIXME: Вынести логику, сделать проценту конфигурируемыми
