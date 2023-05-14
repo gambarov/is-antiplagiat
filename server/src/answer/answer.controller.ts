@@ -16,10 +16,16 @@ import { CheckAnswerDTO } from './dto/check-answer.dto';
 import { EntityByIdPipe } from 'src/shared/pipes/entity-by-id.pipe';
 import { AnswerEntity } from './entites/answer.entity';
 import { ApiConsumes } from '@nestjs/swagger';
+import { SubmissionService } from '../submission/submission.service';
+import { User } from '../user/decorators/user.decorator';
+import { UserEntity } from '../user/entities/user.entity';
 
-@Controller('answers')
+@Controller('submissions/:submission_id/answers')
 export class AnswerController {
-    constructor(private answerService: AnswerService) {}
+    constructor(
+        private answerService: AnswerService,
+        private submService: SubmissionService,
+    ) {}
 
     @Get(':id')
     async findById(@Param('id', EntityByIdPipe) answer: AnswerEntity) {
@@ -42,17 +48,24 @@ export class AnswerController {
             }),
         )
         file: Express.Multer.File,
+        @Param('submission_id') sub_id: number,
+        @User() user: UserEntity,
     ) {
-        return await this.answerService.upload(dto, file);
-    }
-
-    @Post('check')
-    async check(@Body() dto: CheckAnswerDTO) {
-        return await this.answerService.check(dto);
+        const submission = await this.submService.findByIdOrFail(sub_id, {
+            relations: ['answers'],
+        });
+        return await this.answerService.upload(user, submission, file);
     }
 
     @Post('status')
-    async status(@Body() dto: CheckAnswerDTO) {
-        return await this.answerService.getStatus(dto);
+    async status(
+        @Body() dto: CheckAnswerDTO,
+        @User() user: UserEntity,
+        @Param('submission_id') sub_id: number,
+    ) {
+        const submission = await this.submService.findByIdOrFail(sub_id, {
+            relations: ['answers'],
+        });
+        return await this.answerService.getStatus(user, submission, dto);
     }
 }
