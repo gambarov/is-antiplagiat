@@ -14,6 +14,7 @@ import { UserEntity } from './user.entity';
 import { SubmissionEntity } from '../../submission/entities/submission.entity';
 import { CourseEntity } from '../../course/entities/course.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { StudentEduType } from '../enums/student-edu-type.enum';
 
 @Entity('students')
 export class StudentEntity {
@@ -31,6 +32,9 @@ export class StudentEntity {
 
     @OneToMany(() => SubmissionEntity, (sub) => sub.student)
     submissions: SubmissionEntity[];
+
+    @Column({ type: 'enum', enum: StudentEduType })
+    edu_type: StudentEduType;
 
     @Column({ type: 'varchar', length: '40' })
     ExternalUserID: string;

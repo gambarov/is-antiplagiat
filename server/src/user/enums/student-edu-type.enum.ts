@@ -1,0 +1,6 @@
+export enum StudentEduType {
+    BACHELOR = 'BACHELOR',
+    SPECIALIST = 'SPECIALIST',
+    MASTER = 'MASTER',
+    POSTGRADUATE = 'POSTGRADUATE',
+}
