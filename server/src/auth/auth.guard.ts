@@ -9,6 +9,7 @@ import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_ROUTE } from 'src/shared/decorators/public-route.decorator';
 import { ConfigService } from '@nestjs/config';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,6 +17,7 @@ export class AuthGuard implements CanActivate {
         private readonly jwtService: JwtService,
         private readonly reflector: Reflector,
         private readonly configService: ConfigService,
+        private readonly userService: UserService,
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -31,11 +33,11 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException('Пользователь не авторизован');
         }
         try {
-            const payload = await this.jwtService.verifyAsync(token, {
+            const { id } = await this.jwtService.verifyAsync(token, {
                 secret: this.configService.get('JWT_ACCESS_SECRET'),
             });
             // Прикрепляем данные об аут. пользователе
-            request.user = payload;
+            request.user = await this.userService.findByIdOrFail(id);
         } catch {
             throw new UnauthorizedException();
         }
