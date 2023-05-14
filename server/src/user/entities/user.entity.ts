@@ -7,10 +7,12 @@ import {
     UpdateDateColumn,
     BeforeInsert,
     BeforeUpdate,
+    AfterLoad,
 } from 'typeorm';
 import { StudentEntity } from './student.entity';
 import { SupervisorEntity } from './supervisor.entity';
 import * as bcrypt from 'bcrypt';
+import { SALT_ROUNDS } from '../constants';
 
 @Entity('users')
 export class UserEntity {
@@ -49,11 +51,18 @@ export class UserEntity {
     @UpdateDateColumn()
     updated_at: Date;
 
-    saltOrRounds: string | number = 1;
+    private loadedPassword: string;
+
+    @AfterLoad()
+    private loadPassword(): void {
+        this.loadedPassword = this.password;
+    }
 
     @BeforeInsert()
     @BeforeUpdate()
-    async hashPassword(): Promise<void> {
-        this.password = await bcrypt.hash(this.password, this.saltOrRounds);
+    private async hashPassword(): Promise<void> {
+        if (this.loadedPassword != this.password) {
+            this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+        }
     }
 }
