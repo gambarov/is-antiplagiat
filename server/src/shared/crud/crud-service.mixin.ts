@@ -61,7 +61,6 @@ export function CrudService<T>(entity: Constructor<T>): Type<ICrudService<T>> {
 
         async createOne(dto: T | DeepPartial<T>): Promise<T> {
             const entity = this.prepareToSave(dto);
-            console.log(entity);
             return this.repo.save(this.repo.create(entity)) as T;
         }
 
