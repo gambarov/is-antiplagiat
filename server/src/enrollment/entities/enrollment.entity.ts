@@ -1,5 +1,6 @@
 import { StudentEntity } from 'src/user/entities/student.entity';
 import {
+    Column,
     CreateDateColumn,
     Entity,
     JoinColumn,
@@ -7,7 +8,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { CourseEntity } from './course.entity';
+import { CourseEntity } from '../../course/entities/course.entity';
 
 @Entity('enrollments')
 export class EnrollmentEntity {
@@ -21,12 +22,18 @@ export class EnrollmentEntity {
     @JoinColumn({ name: 'student_id' })
     student: StudentEntity;
 
+    @Column({ nullable: false })
+    student_id: number;
+
     @ManyToOne(() => CourseEntity, (course) => course.enrollments, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     })
     @JoinColumn({ name: 'course_id' })
     course: CourseEntity;
+
+    @Column({ nullable: false })
+    course_id: number;
 
     @CreateDateColumn()
     created_at: Date;

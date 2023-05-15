@@ -27,12 +27,18 @@ export class SubmissionEntity {
     @JoinColumn({ name: 'student_id' })
     student: StudentEntity;
 
+    @Column({ nullable: false })
+    student_id: number;
+
     @ManyToOne(() => AssignmentEntity, (ass) => ass.submissions, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     })
     @JoinColumn({ name: 'assignment_id' })
     assignment: AssignmentEntity;
+
+    @Column({ nullable: false })
+    assignment_id: number;
 
     @OneToMany(() => AnswerEntity, (answer) => answer.submission, {
         cascade: true,

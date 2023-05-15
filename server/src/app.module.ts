@@ -11,6 +11,7 @@ import { SubmissionModule } from './submission/submission.module';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from './config/config.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
 
 @Module({
     imports: [
@@ -27,6 +28,7 @@ import { ConfigModule } from './config/config.module';
         AnswerModule,
         SubmissionModule,
         AuthModule,
+        EnrollmentModule,
     ],
 })
 export class AppModule {}

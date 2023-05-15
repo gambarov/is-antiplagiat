@@ -10,7 +10,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { EnrollmentEntity } from './enrollment.entity';
+import { EnrollmentEntity } from '../../enrollment/entities/enrollment.entity';
 
 @Entity('courses')
 export class CourseEntity {

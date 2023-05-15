@@ -15,7 +15,7 @@ import { SubmissionEntity } from '../../submission/entities/submission.entity';
 import { CourseEntity } from '../../course/entities/course.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { StudentEduType } from '../enums/student-edu-type.enum';
-import { EnrollmentEntity } from '../../course/entities/enrollment.entity';
+import { EnrollmentEntity } from '../../enrollment/entities/enrollment.entity';
 
 @Entity('students')
 export class StudentEntity {
