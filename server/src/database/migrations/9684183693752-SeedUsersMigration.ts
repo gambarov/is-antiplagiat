@@ -27,6 +27,7 @@ export class SeedUsersMigration9684183693751 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         const users = await queryRunner.manager.find<UserEntity>(UserEntity);
-        await queryRunner.manager.delete<UserEntity>(UserEntity, users);
+        if (users.length > 0)
+            await queryRunner.manager.delete<UserEntity>(UserEntity, users);
     }
 }
