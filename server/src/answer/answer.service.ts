@@ -57,6 +57,7 @@ export class AnswerService extends CrudService(AnswerEntity) {
             file_url: fileName,
             result: this.resultRepo.create({
                 DocId,
+                // FIXME: Данный статус устан. только из-за того, что мы сразу отпр. работу на проверку
                 Status: AnswerResultStatus.InProgress,
             }),
         });

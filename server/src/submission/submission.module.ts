@@ -18,5 +18,6 @@ import { AnswerEntity } from 'src/answer/entites/answer.entity';
             AnswerEntity,
         ]),
     ],
+    exports: [SubmissionService],
 })
 export class SubmissionModule {}

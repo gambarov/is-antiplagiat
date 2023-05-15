@@ -1,4 +1,3 @@
-import { StudentEntity } from 'src/user/entities/student.entity';
 import { AssignmentEntity } from '../../assignment/entities/assignment.entity';
 import {
     Column,
@@ -11,6 +10,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { EnrollmentEntity } from '../../enrollment/entities/enrollment.entity';
+import { StudentEntity } from '../../user/entities/student.entity';
 
 @Entity('courses')
 export class CourseEntity {

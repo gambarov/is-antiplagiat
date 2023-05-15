@@ -7,6 +7,7 @@ import { AnswerEntity } from './entites/answer.entity';
 import { AnswerResultEntity } from './entites/answer-result.entity';
 import { AnswerService } from './answer.service';
 import { CrudService } from 'src/shared/crud/crud-service.mixin';
+import { SubmissionModule } from '../submission/submission.module';
 
 @Module({
     providers: [
@@ -17,6 +18,7 @@ import { CrudService } from 'src/shared/crud/crud-service.mixin';
     imports: [
         AntiplagiatModule,
         FileModule,
+        SubmissionModule,
         TypeOrmModule.forFeature([AnswerEntity, AnswerResultEntity]),
     ],
 })
