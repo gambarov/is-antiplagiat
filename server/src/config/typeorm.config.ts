@@ -2,6 +2,13 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { ConfigModule } from './config.module';
+import { ConfigModule as NestConfigModule } from '@nestjs/config';
+import {
+    TypeOrmModuleAsyncOptions,
+    TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
+import { ALL_ENTITIES } from '../database/constants';
+import { isPromise } from 'util/types';
 
 export const buildDataSourceOptions = (
     configService: ConfigService,
@@ -14,6 +21,26 @@ export const buildDataSourceOptions = (
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
     };
+    return options;
+};
+
+export const buildTypeOrmModuleAsyncOptions = (
+    useFactoryOptions: (configService: ConfigService) => TypeOrmModuleOptions,
+): TypeOrmModuleAsyncOptions => {
+    const useFactory = (
+        configService: ConfigService,
+    ): TypeOrmModuleAsyncOptions => ({
+        ...buildDataSourceOptions(configService),
+        entities: ALL_ENTITIES,
+        ...useFactoryOptions(configService),
+    });
+
+    const options: TypeOrmModuleAsyncOptions = {
+        imports: [NestConfigModule],
+        inject: [ConfigService],
+        useFactory,
+    };
+
     return options;
 };
 
