@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
 import { StudentEntity } from '../../user/entities/student.entity';
+import { UserType } from '../../user/enums/user-type.enum';
 
-export class SeedUsersMigration1683755615136 implements MigrationInterface {
-    name = 'SeedUsersMigration1683755615136';
+export class SeedUsersMigration9684183693751 implements MigrationInterface {
+    name = 'SeedUsersMigration9684183693751';
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        // Даже учитывая каскадную связь, здесь приходится сначала сохранять сущность
         const student = await queryRunner.manager.save<StudentEntity>(
-            queryRunner.manager.create<StudentEntity>(StudentEntity, {
-                ExternalUserID: 'testid',
-            }),
+            queryRunner.manager.create<StudentEntity>(StudentEntity),
         );
 
         await queryRunner.manager.save(
@@ -19,6 +19,7 @@ export class SeedUsersMigration1683755615136 implements MigrationInterface {
                 surname: 'gamb',
                 name: 'den',
                 patronymic: 'ild',
+                type: UserType.STUDENT,
                 student,
             }),
         );
