@@ -10,6 +10,7 @@ import { AnswerEntity } from '../answer/entites/answer.entity';
 import { AnswerResultEntity } from '../answer/entites/answer-result.entity';
 import { SubmissionEntity } from '../submission/entities/submission.entity';
 import { buildDataSourceOptions } from '../config/typeorm.config';
+import { AssignmentSubscriber } from '../assignment/subscribers/assignment.subscriber';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { buildDataSourceOptions } from '../config/typeorm.config';
                     AnswerResultEntity,
                     SubmissionEntity,
                 ],
+                subscribers: [AssignmentSubscriber],
                 synchronize: false,
             }),
         }),
