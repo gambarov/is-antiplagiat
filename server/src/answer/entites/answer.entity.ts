@@ -19,7 +19,8 @@ export class AnswerEntity {
 
     @ManyToOne(() => SubmissionEntity, (sub) => sub.answers, {
         nullable: false,
-        cascade: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     })
     @JoinColumn({ name: 'submission_id' })
     submission: SubmissionEntity;

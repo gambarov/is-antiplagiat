@@ -13,6 +13,7 @@ import { StudentEntity } from './student.entity';
 import { SupervisorEntity } from './supervisor.entity';
 import * as bcrypt from 'bcrypt';
 import { SALT_ROUNDS } from '../constants';
+import { UserType } from '../enums/user-type.enum';
 
 @Entity('users')
 export class UserEntity {
@@ -37,12 +38,19 @@ export class UserEntity {
     @Column({ default: '' })
     patronymic: string;
 
+    @Column({ type: 'enum', enum: UserType })
+    type: UserType;
+
     @OneToOne(() => StudentEntity, (student) => student.user, {
         nullable: true,
+        cascade: true,
     })
     student: StudentEntity;
 
-    @OneToOne(() => SupervisorEntity, { nullable: true })
+    @OneToOne(() => SupervisorEntity, (supervisor) => supervisor.user, {
+        nullable: true,
+        cascade: true,
+    })
     supervisor: SupervisorEntity;
 
     @CreateDateColumn()

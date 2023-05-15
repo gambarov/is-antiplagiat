@@ -20,12 +20,15 @@ export class AssignmentEntity {
     name: string;
 
     @ManyToOne(() => CourseEntity, (course) => course.assignments, {
-        cascade: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     })
     @JoinColumn({ name: 'course_id' })
     course: CourseEntity;
 
-    @OneToMany(() => SubmissionEntity, (sub) => sub.assignment)
+    @OneToMany(() => SubmissionEntity, (sub) => sub.assignment, {
+        cascade: true,
+    })
     submissions: SubmissionEntity[];
 
     @CreateDateColumn()

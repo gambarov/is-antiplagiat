@@ -20,15 +20,23 @@ export class SubmissionEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => StudentEntity, (student) => student.submissions)
+    @ManyToOne(() => StudentEntity, (student) => student.submissions, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'student_id' })
     student: StudentEntity;
 
-    @ManyToOne(() => AssignmentEntity, (ass) => ass.submissions)
+    @ManyToOne(() => AssignmentEntity, (ass) => ass.submissions, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'assignment_id' })
     assignment: AssignmentEntity;
 
-    @OneToMany(() => AnswerEntity, (answer) => answer.submission)
+    @OneToMany(() => AnswerEntity, (answer) => answer.submission, {
+        cascade: true,
+    })
     answers: AnswerEntity[];
 
     @Column({

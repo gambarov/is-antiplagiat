@@ -10,6 +10,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { EnrollmentEntity } from './enrollment.entity';
 
 @Entity('courses')
 export class CourseEntity {
@@ -19,12 +20,22 @@ export class CourseEntity {
     @Column()
     name: string;
 
-    @OneToMany(() => AssignmentEntity, (ass) => ass.course)
+    @OneToMany(() => AssignmentEntity, (ass) => ass.course, {
+        cascade: true,
+    })
     assignments: AssignmentEntity[];
 
-    @ManyToMany(() => StudentEntity, (student) => student.courses)
+    @ManyToMany(() => StudentEntity, (student) => student.courses, {
+        onDelete: 'NO ACTION',
+        onUpdate: 'NO ACTION',
+    })
     @JoinTable()
     students: StudentEntity[];
+
+    @OneToMany(() => EnrollmentEntity, (enr) => enr.course, {
+        cascade: true,
+    })
+    enrollments: EnrollmentEntity[];
 
     @CreateDateColumn()
     created_at: Date;

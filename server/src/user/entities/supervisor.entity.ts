@@ -13,7 +13,10 @@ export class SupervisorEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(() => UserEntity, { cascade: true })
+    @OneToOne(() => UserEntity, (user) => user.supervisor, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'user_id' })
     user: UserEntity;
 

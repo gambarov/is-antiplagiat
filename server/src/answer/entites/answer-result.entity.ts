@@ -14,8 +14,10 @@ import { AnswerEntity } from './answer.entity';
 export class AnswerResultEntity {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @OneToOne(() => AnswerEntity, (answer) => answer.result)
+    @OneToOne(() => AnswerEntity, (answer) => answer.result, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'answer_id' })
     answer: AnswerEntity;
 
