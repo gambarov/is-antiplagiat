@@ -7,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { TokenService } from './token.service';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from 'src/user/user.module';
+import { UserTypesGuard } from './user-types.guard';
 
 @Module({
     controllers: [AuthController],
@@ -15,6 +16,10 @@ import { UserModule } from 'src/user/user.module';
         {
             provide: APP_GUARD,
             useClass: AuthGuard,
+        },
+        {
+            provide: APP_GUARD,
+            useClass: UserTypesGuard,
         },
         TokenService,
     ],
