@@ -8,7 +8,6 @@ import {
     TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
 import { ALL_ENTITIES } from '../database/constants';
-import { isPromise } from 'util/types';
 
 export const buildDataSourceOptions = (
     configService: ConfigService,
