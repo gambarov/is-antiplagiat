@@ -1,15 +1,10 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ESNext"
-        ],
-        "module": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": false,
         "skipLibCheck": true,
-        /* Bundler mode */
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "allowImportingTsExtensions": true,
         /* Especially for @redux/toolkit */
         "allowSyntheticDefaultImports": true,
@@ -22,22 +17,14 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        /* Aliases */
-        "typeRoots": [
-            "node_modules/@types",
-            "types/"
-        ],
+        "typeRoots": ["node_modules/@types", "types/"],
         "baseUrl": "./src",
+        /* Aliases */
         "paths": {
-            "@/*": [
-                "*"
-            ]
+            "@/*": ["*"]
         }
     },
-    "include": [
-        "src",
-        "types"
-    ],
+    "include": ["src", "types"],
     "references": [
         {
             "path": "./tsconfig.node.json"
