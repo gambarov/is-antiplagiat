@@ -32,4 +32,7 @@ export const sessionSlice = createSlice({
     extraReducers: {},
 });
 
+export const selectIsAuth = (state: RootState) => state.session.isAuth;
+export const selectUserId = (state: RootState) => state.session.userId;
+
 export const { clearSession } = sessionSlice.actions;
