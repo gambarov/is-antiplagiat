@@ -24,7 +24,12 @@ export class AuthService {
         const isMatch =
             user && (await bcrypt.compare(dto.password, user.password));
 
-        if (isMatch) return await this.updateUserTokens(user);
+        const response = {
+            user,
+            tokens: await this.updateUserTokens(user),
+        };
+
+        if (isMatch) return response;
         else throw new UnauthorizedException('Неправильный логин и/или пароль');
     }
 
