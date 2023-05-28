@@ -1,8 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import storage from 'redux-persist/lib/storage';
-import { persistStore, persistReducer } from 'redux-persist';
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist';
 import { rootReducer } from './root-reducer';
+import { baseApi } from '@/shared/api';
+import { invalidateAccessTokenListener } from './features/auth/invalidate-access-token/model/listener';
 
 const persistConfig = {
     key: 'root',
@@ -17,6 +28,22 @@ export function makeStore() {
             persistConfig,
             rootReducer,
         ) as unknown as typeof rootReducer,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: {
+                    ignoredActions: [
+                        FLUSH,
+                        REHYDRATE,
+                        PAUSE,
+                        PERSIST,
+                        PURGE,
+                        REGISTER,
+                    ],
+                },
+            }).concat(
+                baseApi.middleware,
+                invalidateAccessTokenListener.middleware,
+            ),
     });
 
     setupListeners(store.dispatch);
