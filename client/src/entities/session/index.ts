@@ -4,6 +4,6 @@ import {
     clearSession,
     selectIsAuth,
     selectUserId,
-} from './model/slice';
+} from './model/session-slice';
 
 export { sessionApi, sessionSlice, clearSession, selectIsAuth, selectUserId };
