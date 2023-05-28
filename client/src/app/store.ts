@@ -13,7 +13,7 @@ import {
 } from 'redux-persist';
 import { rootReducer } from './root-reducer';
 import { baseApi } from '@/shared/api';
-import { invalidateAccessTokenListener } from './features/auth/invalidate-access-token/model/listener';
+import { invalidateAccessTokenListener } from '@/features/auth/invalidate-access-token';
 
 const persistConfig = {
     key: 'root',
