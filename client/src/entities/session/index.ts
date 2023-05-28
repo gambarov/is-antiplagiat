@@ -5,5 +5,13 @@ import {
     selectIsAuth,
     selectUserId,
 } from './model/session-slice';
+import { type RequestSigninBody } from './api/types';
 
-export { sessionApi, sessionSlice, clearSession, selectIsAuth, selectUserId };
+export {
+    sessionApi,
+    sessionSlice,
+    clearSession,
+    selectIsAuth,
+    selectUserId,
+    type RequestSigninBody,
+};

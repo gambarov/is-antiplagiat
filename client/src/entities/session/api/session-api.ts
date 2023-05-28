@@ -7,7 +7,7 @@ export const sessionApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         signin: build.mutation<Session, RequestSigninBody>({
             query: (body) => ({
-                url: '/signin',
+                url: '/auth/signin',
                 method: 'POST',
                 body,
             }),

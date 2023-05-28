@@ -1,25 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { sessionApi } from '@/entities/session';
+import { RequestSigninBody, sessionApi } from '@/entities/session';
 import { isFetchBaseQueryError } from '../../../../shared/api';
-
-type Params = {
-    login: string;
-    password: string;
-};
 
 export const loginThunk = createAsyncThunk(
     'auth/login',
-    async (body: Params, { dispatch }) => {
+    async (body: RequestSigninBody, { dispatch, rejectWithValue }) => {
         try {
-            await dispatch(sessionApi.endpoints.signin.initiate(body)).unwrap()
+            await dispatch(sessionApi.endpoints.signin.initiate(body)).unwrap();
         } catch (error) {
             if (isFetchBaseQueryError(error)) {
                 if (typeof error.data == 'string') {
+                    console.log('FetchBaseQueryError')
                     throw new Error(error.data);
                 }
             }
 
-            throw error;
+            return rejectWithValue(error);
         }
     },
 );
