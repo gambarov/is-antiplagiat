@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UserEntity } from '../user/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { SignInDTO } from './dto/sign-in.dto';
@@ -24,13 +24,15 @@ export class AuthService {
         const isMatch =
             user && (await bcrypt.compare(dto.password, user.password));
 
+        if (!isMatch)
+            throw new ForbiddenException('Неправильный логин и/или пароль');
+
         const response = {
             user,
             tokens: await this.updateUserTokens(user),
         };
 
-        if (isMatch) return response;
-        else throw new UnauthorizedException('Неправильный логин и/или пароль');
+        return response;
     }
 
     async logout(refreshToken: string) {
@@ -49,7 +51,7 @@ export class AuthService {
             },
         );
 
-        if (!user) throw new UnauthorizedException();
+        if (!user) throw new ForbiddenException();
 
         return await this.updateUserTokens(user);
     }
