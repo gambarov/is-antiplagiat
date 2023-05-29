@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RequestSigninBody, sessionApi } from '@/entities/session';
 import { isFetchBaseQueryError } from '../../../../shared/api';
 
-export const loginThunk = createAsyncThunk(
+export const signinThunk = createAsyncThunk(
     'auth/login',
     async (body: RequestSigninBody, { dispatch, rejectWithValue }) => {
         try {

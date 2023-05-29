@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LoginForm } from '@/features/auth/login';
+import { SigninForm } from '@/features/auth/signin';
 import { Row } from 'antd';
 
-export const LoginPage = () => {
+export const SigninPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -14,7 +14,7 @@ export const LoginPage = () => {
     return (
         <div>
             <Row align="middle" justify="center" style={{ minHeight: '100vh' }}>
-                <LoginForm onComplete={onComplete} />
+                <SigninForm onComplete={onComplete} />
             </Row>
         </div>
     );

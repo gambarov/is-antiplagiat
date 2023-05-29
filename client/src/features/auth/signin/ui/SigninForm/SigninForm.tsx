@@ -2,13 +2,13 @@ import { Button, Card, Checkbox, Form, Input, message } from 'antd';
 import { useAppDispatch } from '@/shared/model/hooks';
 import { RequestSigninBody } from '@/entities/session';
 import { useCallback } from 'react';
-import { loginThunk } from '../../model/login';
+import { signinThunk } from '../../model/signin';
 
 type Props = {
     onComplete?: () => void;
 };
 
-export const LoginForm = ({ onComplete }: Props) => {
+export const SigninForm = ({ onComplete }: Props) => {
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -16,14 +16,14 @@ export const LoginForm = ({ onComplete }: Props) => {
 
     const onErrorMessage = (content: string) => {
         messageApi.open({
-          type: 'error',
-          content,
+            type: 'error',
+            content,
         });
-      };
+    };
 
     const onFinish = useCallback(
         (body: RequestSigninBody) => {
-            dispatch(loginThunk(body))
+            dispatch(signinThunk(body))
                 .unwrap()
                 .then(() => {
                     onComplete?.();
