@@ -6,6 +6,7 @@ import {
     selectUserId,
 } from './model/session-slice';
 import { type RequestSigninBody } from './api/types';
+import { PrivateRoutes } from './lib/private-route';
 
 export {
     sessionApi,
@@ -14,4 +15,5 @@ export {
     selectIsAuth,
     selectUserId,
     type RequestSigninBody,
+    PrivateRoutes,
 };
