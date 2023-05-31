@@ -1,4 +1,4 @@
-import { baseApi } from '@/shared/api';
+import { SESSION_TAG, baseApi } from '@/shared/api';
 import { Session } from '../model/types';
 import { RequestSigninBody, SessionDto } from './types';
 import { mapSession } from '../lib/map-session';
@@ -11,6 +11,7 @@ export const sessionApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: [SESSION_TAG],
             transformResponse: (response: SessionDto) => mapSession(response),
         }),
     }),
